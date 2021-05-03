@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.myName = myName
-        setContentView(R.layout.activity_main)
+        binding.button.setOnClickListener {
+            binding.textViewName.text = "Artik adin mahmut zaaa!"
+        }
     }
 }
