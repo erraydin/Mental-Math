@@ -9,12 +9,31 @@
         android:name="com.erraydin.mentalmath.screens.title.TitleFragment"
         android:label="TitleFragment" >
         <action
-            android:id="@+id/action_titleFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
-        <action
             android:id="@+id/action_titleFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
+            app:destination="@id/historyFragment"
+            app:popUpTo="@id/titleFragment" />
+        <action
+            android:id="@+id/action_titleFragment_to_chooseDifficultyFragment"
+            app:destination="@id/chooseDifficultyFragment"
+            app:popUpTo="@id/titleFragment" />
+        <action
+            android:id="@+id/action_titleFragment_to_infoFragment"
+            app:destination="@id/infoFragment"
+            app:popUpTo="@id/titleFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/chooseDifficultyFragment"
+        android:name="com.erraydin.mentalmath.screens.choose_difficulty.ChooseDifficultyFragment"
+        android:label="ChooseDifficultyFragment" >
+        <action
+            android:id="@+id/action_chooseDifficultyFragment_to_gameFragment"
+            app:destination="@id/gameFragment"
+            app:popUpTo="@id/chooseDifficultyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.erraydin.mentalmath.screens.history.HistoryFragment"
+        android:label="HistoryFragment" />
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.erraydin.mentalmath.screens.game.GameFragment"
@@ -28,17 +47,17 @@
         android:name="com.erraydin.mentalmath.screens.score.ScoreFragment"
         android:label="ScoreFragment" >
         <action
-            android:id="@+id/action_scoreFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            android:id="@+id/action_scoreFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_scoreFragment_to_chooseDifficultyFragment"
+            app:destination="@id/chooseDifficultyFragment" />
         <action
             android:id="@+id/action_scoreFragment_to_titleFragment"
             app:destination="@id/titleFragment" />
-        <action
-            android:id="@+id/action_scoreFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
-        android:id="@+id/historyFragment"
-        android:name="com.erraydin.mentalmath.screens.history.HistoryFragment"
-        android:label="HistoryFragment" />
+        android:id="@+id/infoFragment"
+        android:name="com.erraydin.mentalmath.screens.info.InfoFragment"
+        android:label="InfoFragment" />
 </navigation>

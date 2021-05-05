@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.erraydin.mentalmath.R
 import com.erraydin.mentalmath.databinding.FragmentTitleBinding
 
+
 class TitleFragment : Fragment() {
     private lateinit var binding: FragmentTitleBinding
     override fun onCreateView(
@@ -19,13 +20,22 @@ class TitleFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_title, container, false)
 
-        binding.buttonStartGame.setOnClickListener {
-            findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+        binding.buttonPlay.setOnClickListener {
+            findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToChooseDifficultyFragment())
         }
-//        binding.buttonScoreHistory.setOnClickListener {
-//            findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToHistoryFragment())
-//        }
+
+        binding.buttonHistory.setOnClickListener {
+            findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToHistoryFragment())
+        }
+
+        binding.buttonInfo.setOnClickListener {
+            findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToInfoFragment())
+        }
+
         return binding.root
     }
+
+
+
 
 }
