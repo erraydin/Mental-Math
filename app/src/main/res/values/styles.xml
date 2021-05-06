@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="margin_top_small">
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+
+    <style name="action_bar_color">
+        <item name="background">@color/background_lighter</item>
+    </style>
+</resources>
