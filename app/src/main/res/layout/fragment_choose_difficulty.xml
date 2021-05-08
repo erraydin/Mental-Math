@@ -11,120 +11,153 @@
 
 
         <TextView
-            android:layout_marginTop="12dp"
             android:id="@+id/text_view_choose_difficulty"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="Choose Difficulty:"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="italic"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_easy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintWidth_percent="0.85" />
 
         <com.google.android.material.button.MaterialButton
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/button_easy"
-            app:layout_constraintTop_toBottomOf="@id/text_view_choose_difficulty"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintWidth_percent="0.85"
-            app:cornerRadius="12dp"
-            android:text="Easy" />
-        <com.google.android.material.button.MaterialButton
-            android:backgroundTint="@color/selected_color"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/button_medium"
-            app:layout_constraintTop_toBottomOf="@id/button_easy"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintWidth_percent="0.85"
-            app:cornerRadius="12dp"
-            android:text="Medium" />
-        <com.google.android.material.button.MaterialButton
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/button_hard"
-            app:layout_constraintTop_toBottomOf="@id/button_medium"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintWidth_percent="0.85"
-            app:cornerRadius="12dp"
-            android:text="Hard" />
-        <com.google.android.material.button.MaterialButton
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/button_expert"
-            app:layout_constraintTop_toBottomOf="@id/button_hard"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintWidth_percent="0.85"
-            app:cornerRadius="12dp"
-            android:text="Expert" />
 
+            android:id="@+id/button_easy"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Easy"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toTopOf="@id/button_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_choose_difficulty"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_medium"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="@color/selected_color"
+            android:text="Medium"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toTopOf="@id/button_hard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_easy"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_hard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Hard"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toTopOf="@id/button_expert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_medium"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_expert"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Expert"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toTopOf="@id/card_view_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_hard"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintWidth_percent="0.85" />
 
 
         <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/selected_color"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_expert"
             android:id="@+id/card_view_info"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent="0.85"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/selected_color"
             app:cardBackgroundColor="@color/background_lighter"
-            app:cardCornerRadius="24dp">
+            app:cardCornerRadius="24dp"
+            app:layout_constraintBottom_toTopOf="@id/button_start_game"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_expert"
+            app:layout_constraintVertical_weight="3.5"
+            app:layout_constraintWidth_percent="0.85">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/text_view_difficulty_title"
                     style="@style/margin_top_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
                     android:gravity="center_horizontal"
                     android:text="Medium Difficulty"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@id/text_view_contains_following"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread" />
 
                 <TextView
-
+                    android:id="@+id/text_view_contains_following"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center_horizontal"
-                    android:padding="12dp"
-                    android:text="This test contains the following: \n\n• Addition \n• Subtraction \n• Multiplication \n• Division \n• Position changes \n• Decimals \n• Fractios"
-                    android:textColor="@color/white" />
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="This test contains the following:"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toTopOf="@id/text_view_operations"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_difficulty_title" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_start_game"
+                <TextView
+                    android:id="@+id/text_view_operations"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:backgroundTint="@color/button_green"
-                    android:text="Start Game"
-                    android:textSize="32sp"
-                    app:cornerRadius="12dp" />
+                    android:gravity="center"
+                    android:paddingBottom="12dp"
+                    android:text="• Addition \n• Subtraction \n• Multiplication \n• Division \n• Position changes"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_contains_following" />
 
 
-            </LinearLayout>
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_start_game"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/button_green"
+            android:text="Start Game"
+            android:textSize="32sp"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_view_info"
+            app:layout_constraintVertical_weight="1.2"
+            app:layout_constraintWidth_percent="0.85" />
+
 
         <!--        <Button-->
         <!--            android:id="@+id/button_score_history"-->
