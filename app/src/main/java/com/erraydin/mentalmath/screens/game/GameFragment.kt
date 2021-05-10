@@ -35,6 +35,8 @@ class GameFragment : Fragment() {
 
         viewModel.gameFinished.observe(viewLifecycleOwner, Observer { gameFinished ->
             if (gameFinished) {
+                viewModel.onGameFinishEnd()
+                viewModel.pauseTimer()
                 findNavController().navigate(GameFragmentDirections.actionGameFragmentToScoreFragment())
             }
         })

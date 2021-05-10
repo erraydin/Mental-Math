@@ -3,16 +3,21 @@ package com.erraydin.mentalmath.screens.game
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
+import java.lang.IllegalArgumentException
+import kotlin.random.Random
 
 class GameViewModel : ViewModel() {
     private val _remainingTime = MutableLiveData<Long>()
-    val remainingTime : LiveData<Long>
+    val remainingTime: LiveData<Long>
         get() = _remainingTime
 
     private val _gameFinished = MutableLiveData<Boolean>()
-    val gameFinished : LiveData<Boolean>
+    val gameFinished: LiveData<Boolean>
         get() = _gameFinished
 
+    private val _question = MutableLiveData<String>()
+    val question: LiveData<String>
+        get() = _question
 
     private var timer: CountDownTimer? = null
 
@@ -23,6 +28,7 @@ class GameViewModel : ViewModel() {
     }
 
     init {
+        nextQuestion("Easy")
         Log.i("GameViewMode", "GameViewModel created!")
         _remainingTime.value = TOTAL_TIME / ONE_SECOND
         startTimer(TOTAL_TIME)
@@ -38,6 +44,13 @@ class GameViewModel : ViewModel() {
 //        }
 
         timer?.start()
+    }
+
+    private fun nextQuestion(difficulty: String) {
+        val a = "0.25".toDoubleOrNull()
+        val b = "1/4".toDoubleOrNull()
+        Log.i("GameViewModel", "a: $a, b: $b")
+
     }
 
     fun pauseTimer() {
@@ -67,7 +80,7 @@ class GameViewModel : ViewModel() {
 
     }
 
-    fun onGameFinishEnd () {
+    fun onGameFinishEnd() {
         _gameFinished.value = false
     }
 
