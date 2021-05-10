@@ -27,6 +27,11 @@ class GameFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
         Log.i("GameFragment", "Called ViewModelProvider")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+
+        viewModel.remainingTime.observe(viewLifecycleOwner, Observer { newTime ->
+            binding.textViewRemainingTime.text = newTime.toString()
+        })
+
         return binding.root
     }
 
