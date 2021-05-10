@@ -37,12 +37,11 @@ class GameFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        Log.i("GameFragment", "onPause called")
+        viewModel.pauseTimer()
     }
 
     override fun onResume() {
         super.onResume()
-        Log.i("GameFragment", "onResume called")
+        viewModel.resumeTimer()
     }
-
 }
