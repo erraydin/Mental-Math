@@ -9,6 +9,10 @@ class GameViewModel : ViewModel() {
     val remainingTime : LiveData<Long>
         get() = _remainingTime
 
+    private val _gameFinished = MutableLiveData<Boolean>()
+    val gameFinished : LiveData<Boolean>
+        get() = _gameFinished
+
 
     private var timer: CountDownTimer? = null
 
@@ -39,12 +43,10 @@ class GameViewModel : ViewModel() {
     fun pauseTimer() {
         timer?.cancel()
         timer = null
-        Log.i("GameFragment", "timer is null: ${timer == null}")
     }
 
     fun resumeTimer() {
         _remainingTime.value?.let { startTimer(it * ONE_SECOND) }
-        Log.i("GameFragment", "timer is not null: ${timer != null}" )
     }
 
     private fun startTimer(remainingTimeMilli: Long) {
@@ -56,13 +58,17 @@ class GameViewModel : ViewModel() {
                 }
 
                 override fun onFinish() {
-                    // TODO implement what should happen when the timer finishes
+                    _gameFinished.value = true
                 }
             }
 
             timer?.start()
         }
 
+    }
+
+    fun onGameFinishEnd () {
+        _gameFinished.value = false
     }
 
     override fun onCleared() {

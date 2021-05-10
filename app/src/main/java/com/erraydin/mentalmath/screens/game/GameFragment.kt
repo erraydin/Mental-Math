@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.erraydin.mentalmath.R
 import com.erraydin.mentalmath.databinding.FragmentGameBinding
 
@@ -30,6 +31,12 @@ class GameFragment : Fragment() {
 
         viewModel.remainingTime.observe(viewLifecycleOwner, Observer { newTime ->
             binding.textViewRemainingTime.text = newTime.toString()
+        })
+
+        viewModel.gameFinished.observe(viewLifecycleOwner, Observer { gameFinished ->
+            if (gameFinished) {
+                findNavController().navigate(GameFragmentDirections.actionGameFragmentToScoreFragment())
+            }
         })
 
         return binding.root
