@@ -24,7 +24,7 @@ class GameViewModel : ViewModel() {
         get() = _userAnswer
 
     private val _score = MutableLiveData<Int>()
-    val score : LiveData<Int>
+    val score: LiveData<Int>
         get() = _score
 
     private var result: Int = 0
@@ -32,7 +32,19 @@ class GameViewModel : ViewModel() {
     private var timer: CountDownTimer? = null
 
     companion object {
-        const val DONE = 0L
+        const val BUTTON_0 = "0"
+        const val BUTTON_1 = "1"
+        const val BUTTON_2 = "2"
+        const val BUTTON_3 = "3"
+        const val BUTTON_4 = "4"
+        const val BUTTON_5 = "5"
+        const val BUTTON_6 = "6"
+        const val BUTTON_7 = "7"
+        const val BUTTON_8 = "8"
+        const val BUTTON_9 = "9"
+        const val BUTTON_DOT = "."
+        const val BUTTON_DIVISION = "/"
+        const val BUTTON_MINUS = "-"
         const val ONE_SECOND = 1000L
         const val TOTAL_TIME = 12000L
     }
@@ -64,6 +76,15 @@ class GameViewModel : ViewModel() {
 
     }
 
+    fun skipQuestion() {
+        if (_score.value != null && _score.value!! > 0) {
+            _score.value = _score.value?.minus(1)
+        }
+
+        _userAnswer.value = ""
+        nextQuestion("Easy")
+    }
+
     fun pauseTimer() {
         timer?.cancel()
         timer = null
@@ -90,7 +111,8 @@ class GameViewModel : ViewModel() {
         }
 
     }
-    fun getResult() : Int {
+
+    fun getResult(): Int {
         return result
     }
 
@@ -99,7 +121,21 @@ class GameViewModel : ViewModel() {
     }
 
     fun addToAnswer(char: String) {
-        _userAnswer.value = _userAnswer.value + char
+        when (char) {
+            "-" -> if (_userAnswer.value == "") {
+                _userAnswer.value += char
+            }
+            "/" -> if (_userAnswer.value?.toIntOrNull() != null) {
+                _userAnswer.value += char
+            }
+            "." -> if (_userAnswer.value == "" || _userAnswer.value == "-") {
+                _userAnswer.value += "0${char}"
+            } else if (_userAnswer.value?.toIntOrNull() != null) {
+                _userAnswer.value += char
+            }
+            else -> _userAnswer.value += char
+        }
+
 
     }
 

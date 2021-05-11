@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="gameViewModel"
+            type="com.erraydin.mentalmath.screens.game.GameViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,11 +32,12 @@
             app:layout_constraintVertical_chainStyle="spread" />
 
         <TextView
+            tools:text="112"
             android:id="@+id/text_view_remaining_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="76"
+            android:text="@{gameViewModel.remainingTime.toString()}"
             android:textColor="@color/white"
             android:textSize="36dp"
             app:layout_constraintBottom_toTopOf="@id/text_view_score_title"
@@ -49,11 +56,12 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_remaining_time" />
 
         <TextView
+            tools:text="24"
             android:id="@+id/text_view_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="24"
+            android:text="@{gameViewModel.score.toString()}"
             android:textColor="@color/white"
             android:textSize="36sp"
             app:layout_constraintTop_toBottomOf="@id/text_view_score_title" />
@@ -71,7 +79,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_score"
             app:layout_constraintVertical_bias="0.07"
-            tools:text="27 + 57 = " />
+            android:text="@{gameViewModel.question}"
+            tools:text="13 + 17 = "/>
 
         <EditText
             android:cursorVisible="false"
@@ -91,6 +100,7 @@
             app:layout_constraintVertical_bias="0.05" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_1)}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_1"
             android:layout_width="0dp"
@@ -107,6 +117,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_2)}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_2"
             android:layout_width="0dp"
@@ -123,6 +134,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_3)}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_3"
             android:layout_width="0dp"
@@ -139,6 +151,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.backspace()}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_backspace"
             android:layout_width="0dp"
@@ -155,6 +168,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_4)}"
             android:id="@+id/button_4"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -170,6 +184,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_5)}"
             android:id="@+id/button_5"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -185,6 +200,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_6)}"
             android:id="@+id/button_6"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -200,6 +216,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_MINUS)}"
             app:layout_constraintBottom_toTopOf="@id/button_division"
             android:id="@+id/button_minus"
             android:layout_width="0dp"
@@ -215,6 +232,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_7)}"
             app:layout_constraintBottom_toTopOf="@id/view_before_0"
             android:id="@+id/button_7"
             android:layout_width="0dp"
@@ -230,6 +248,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_8)}"
             app:layout_constraintBottom_toTopOf="@id/button_0"
             android:id="@+id/button_8"
             android:layout_width="0dp"
@@ -245,6 +264,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_9)}"
             app:layout_constraintBottom_toTopOf="@id/button_dot"
             android:id="@+id/button_9"
             android:layout_width="0dp"
@@ -260,7 +280,8 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
-            app:layout_constraintBottom_toTopOf="@id/view_after_dot"
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_DIVISION)}"
+            app:layout_constraintBottom_toTopOf="@id/button_skip"
             android:id="@+id/button_division"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -288,6 +309,7 @@
             />
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_0)}"
             android:id="@+id/button_0"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -303,6 +325,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_DOT)}"
             android:id="@+id/button_dot"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -312,13 +335,16 @@
             app:layout_constraintHeight_percent="0.13"
             app:layout_constraintStart_toEndOf="@id/button_0"
             app:layout_constraintTop_toBottomOf="@id/button_9"
-            app:layout_constraintEnd_toStartOf="@id/view_after_dot"
+            app:layout_constraintEnd_toStartOf="@id/button_skip"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintWidth_percent="0.20"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <View
-            android:id="@+id/view_after_dot"
+        <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> gameViewModel.skipQuestion()}"
+            app:cornerRadius="12dp"
+            android:text="Skip"
+            android:id="@+id/button_skip"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintHeight_percent="0.13"
