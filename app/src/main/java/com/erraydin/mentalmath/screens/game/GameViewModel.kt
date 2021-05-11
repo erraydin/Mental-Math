@@ -11,6 +11,11 @@ class GameViewModel : ViewModel() {
     val remainingTime: LiveData<Long>
         get() = _remainingTime
 
+    val remainingTimeString = Transformations.map(remainingTime) { time ->
+        time.toString()
+    }
+
+
     private val _gameFinished = MutableLiveData<Boolean>()
     val gameFinished: LiveData<Boolean>
         get() = _gameFinished
@@ -26,6 +31,10 @@ class GameViewModel : ViewModel() {
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int>
         get() = _score
+
+    val scoreString = Transformations.map(score) { score ->
+        score.toString()
+    }
 
     private var result: Int = 0
 

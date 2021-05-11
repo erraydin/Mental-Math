@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{gameViewModel.remainingTime.toString()}"
+            android:text="@{gameViewModel.remainingTimeString}"
             android:textColor="@color/white"
             android:textSize="36dp"
             app:layout_constraintBottom_toTopOf="@id/text_view_score_title"
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{gameViewModel.score.toString()}"
+            android:text="@{gameViewModel.scoreString}"
             android:textColor="@color/white"
             android:textSize="36sp"
             app:layout_constraintTop_toBottomOf="@id/text_view_score_title" />
