@@ -114,10 +114,15 @@ class GameFragment : Fragment() {
         }
 
         binding.buttonDot.setOnClickListener {
-            if (viewModel.userAnswer.value?.toIntOrNull() != null) {
+            if (viewModel.userAnswer.value == "" ||  viewModel.userAnswer.value == "-") {
+                viewModel.addToAnswer("0")
+                viewModel.addToAnswer(".")
+                binding.editTextResult.setSelection(binding.editTextResult.text.length)
+            }else if (viewModel.userAnswer.value?.toIntOrNull() != null) {
                 viewModel.addToAnswer(".")
                 binding.editTextResult.setSelection(binding.editTextResult.text.length)
             }
+
         }
 
         binding.buttonBackspace.setOnClickListener {
