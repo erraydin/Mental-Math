@@ -19,6 +19,12 @@ class GameViewModel : ViewModel() {
     val question: LiveData<String>
         get() = _question
 
+    private val _userAnswer = MutableLiveData<String>()
+    val userAnswer: LiveData<String>
+        get() = _userAnswer
+
+    private var result: Int = 0
+
     private var timer: CountDownTimer? = null
 
     companion object {
@@ -30,6 +36,7 @@ class GameViewModel : ViewModel() {
     init {
         nextQuestion("Easy")
         Log.i("GameViewMode", "GameViewModel created!")
+        _userAnswer.value = ""
         _remainingTime.value = TOTAL_TIME / ONE_SECOND
         startTimer(TOTAL_TIME)
         timer?.start()
@@ -40,7 +47,7 @@ class GameViewModel : ViewModel() {
         val operand1 = Random.nextInt(10, 99)
         val operand2 = Random.nextInt(10, 99)
         val operation = listOf("+", "-", "×").random()
-        val result = when (operation) {
+        result = when (operation) {
             "+" -> operand1 + operand2
             "-" -> operand1 - operand2
             "×" -> operand1 * operand2
@@ -48,6 +55,7 @@ class GameViewModel : ViewModel() {
         }
 
         _question.value = "$operand1 $operation $operand2 = "
+        _userAnswer.value = ""
 
     }
 
@@ -82,10 +90,23 @@ class GameViewModel : ViewModel() {
         _gameFinished.value = false
     }
 
+    fun addToAnswer(char: String) {
+        _userAnswer.value = _userAnswer.value + char
+
+    }
+
+    fun backspace() {
+        if (_userAnswer.value != "") {
+            _userAnswer.value = _userAnswer.value?.dropLast(1)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         Log.i("GameViewModel", "GameViewModel destroyed!")
         timer?.cancel()
         timer = null
     }
+
+
 }

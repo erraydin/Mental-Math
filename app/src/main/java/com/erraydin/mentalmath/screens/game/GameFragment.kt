@@ -29,6 +29,7 @@ class GameFragment : Fragment() {
         Log.i("GameFragment", "Called ViewModelProvider")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
+        setButtonOnClickListeners()
 
         viewModel.remainingTime.observe(viewLifecycleOwner, Observer { newTime ->
             binding.textViewRemainingTime.text = newTime.toString()
@@ -36,6 +37,10 @@ class GameFragment : Fragment() {
 
         viewModel.question.observe(viewLifecycleOwner, Observer { newQuestion ->
             binding.textViewQuestion.text = newQuestion
+        })
+
+        viewModel.userAnswer.observe(viewLifecycleOwner, Observer { newUserAnswer ->
+            binding.editTextResult.setText(newUserAnswer)
         })
 
         viewModel.gameFinished.observe(viewLifecycleOwner, Observer { gameFinished ->
@@ -47,6 +52,61 @@ class GameFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun setButtonOnClickListeners() {
+        binding.button0.setOnClickListener {
+            viewModel.addToAnswer("0")
+        }
+        binding.button1.setOnClickListener {
+            viewModel.addToAnswer("1")
+        }
+        binding.button2.setOnClickListener {
+            viewModel.addToAnswer("2")
+        }
+        binding.button3.setOnClickListener {
+            viewModel.addToAnswer("3")
+        }
+        binding.button4.setOnClickListener {
+            viewModel.addToAnswer("4")
+        }
+        binding.button5.setOnClickListener {
+            viewModel.addToAnswer("5")
+        }
+        binding.button6.setOnClickListener {
+            viewModel.addToAnswer("6")
+        }
+        binding.button7.setOnClickListener {
+            viewModel.addToAnswer("7")
+        }
+        binding.button8.setOnClickListener {
+            viewModel.addToAnswer("2")
+        }
+        binding.button9.setOnClickListener {
+            viewModel.addToAnswer("9")
+        }
+        binding.buttonDivision.setOnClickListener {
+            if (viewModel.userAnswer.value?.toIntOrNull() != null) {
+                viewModel.addToAnswer("/")
+            }
+        }
+        binding.buttonMinus.setOnClickListener {
+            if (viewModel.userAnswer.value == "") {
+                viewModel.addToAnswer("-")
+            }
+        }
+
+        binding.buttonDot.setOnClickListener {
+            if (viewModel.userAnswer.value?.toIntOrNull() != null) {
+                viewModel.addToAnswer(".")
+            }
+        }
+
+        binding.buttonBackspace.setOnClickListener {
+            viewModel.backspace()
+        }
+
+
     }
 
     override fun onPause() {

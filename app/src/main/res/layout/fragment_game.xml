@@ -66,7 +66,7 @@
             android:textColor="@color/white"
             android:textSize="48sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/text_view_result"
+            app:layout_constraintEnd_toStartOf="@id/edit_text_result"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_score"
@@ -75,7 +75,7 @@
 
         <EditText
             android:focusable="false"
-            android:id="@+id/text_view_result"
+            android:id="@+id/edit_text_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
