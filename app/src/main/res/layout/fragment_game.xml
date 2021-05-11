@@ -74,13 +74,13 @@
             tools:text="27 + 57 = " />
 
         <EditText
-            android:focusable="false"
             android:id="@+id/edit_text_result"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.2"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:inputType="none"
-            android:hint="      "
+            android:inputType="textVisiblePassword"
+            android:hint="         "
             android:textColor="@color/white"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
