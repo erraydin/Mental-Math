@@ -34,7 +34,7 @@ class GameViewModel : ViewModel() {
     companion object {
         const val DONE = 0L
         const val ONE_SECOND = 1000L
-        const val TOTAL_TIME = 120000L
+        const val TOTAL_TIME = 12000L
     }
 
     init {

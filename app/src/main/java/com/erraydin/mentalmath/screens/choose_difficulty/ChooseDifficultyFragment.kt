@@ -17,7 +17,7 @@ import kotlin.properties.Delegates
 
 
 class ChooseDifficultyFragment : Fragment() {
-    private var darkColor by Delegates.notNull<Int>()
+    private var darkColor: Int = 0
     private var selectedColor: Int = 0
     private var difficulty: String = "Medium"
     private lateinit var binding: FragmentChooseDifficultyBinding
