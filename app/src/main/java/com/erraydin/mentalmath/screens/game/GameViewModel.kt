@@ -8,7 +8,7 @@ import kotlin.random.Random
 
 class GameViewModel(difficulty: String) : ViewModel() {
     private val _remainingTime = MutableLiveData<Long>()
-    val remainingTime: LiveData<Long>
+    private val remainingTime: LiveData<Long>
         get() = _remainingTime
 
     val remainingTimeString = Transformations.map(remainingTime) { time ->
@@ -40,7 +40,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
     private var timer: CountDownTimer? = null
 
     companion object {
-//        const val EASY = "Easy"
+        //        const val EASY = "Easy"
 //        const val MEDIUM = "Medium"
 //        const val HARD = "Hard"
 //        const val EXPERT = "Expert"
@@ -71,6 +71,12 @@ class GameViewModel(difficulty: String) : ViewModel() {
         timer?.start()
     }
 
+
+    /* ############################################################################
+    * #####################    GAME LOGIC      ####################################
+    * ############################################################################*/
+
+
     fun nextQuestion() {
         val operand1 = Random.nextInt(0, 99)
         val operand2 = Random.nextInt(0, 99)
@@ -97,14 +103,49 @@ class GameViewModel(difficulty: String) : ViewModel() {
         nextQuestion()
     }
 
-    fun pauseTimer() {
-        timer?.cancel()
-        timer = null
+    //Handles in game keyboard character-button presses
+    fun addToAnswer(char: String) {
+        if (_remainingTime.value!! >= 1) {
+            when (char) {
+                "-" -> if (_userAnswer.value == "") {
+                    _userAnswer.value += char
+                }
+                "/" -> if (_userAnswer.value?.toIntOrNull() != null) {
+                    _userAnswer.value += char
+                }
+                "." -> if (_userAnswer.value == "" || _userAnswer.value == "-") {
+                    _userAnswer.value += "0${char}"
+                } else if (_userAnswer.value?.toIntOrNull() != null) {
+                    _userAnswer.value += char
+                }
+                else -> _userAnswer.value += char
+            }
+        }
     }
 
-    fun resumeTimer() {
-        _remainingTime.value?.let { startTimer(it * ONE_SECOND) }
+    fun incrementScore() {
+        _score.value = _score.value?.plus(1)
     }
+
+    fun backspace() {
+        if (_userAnswer.value != "") {
+            _userAnswer.value = _userAnswer.value?.dropLast(1)
+        }
+    }
+
+    fun onGameFinishEnd() {
+        _gameFinished.value = false
+    }
+
+    fun getResult(): Int {
+        return result
+    }
+
+
+    /* ############################################################################
+    * #####################    TIMER METHODS      #################################
+    * ############################################################################*/
+
 
     private fun startTimer(remainingTimeMilli: Long) {
         if (timer == null) {
@@ -124,45 +165,17 @@ class GameViewModel(difficulty: String) : ViewModel() {
 
     }
 
-    fun getResult(): Int {
-        return result
+    //The following actually completely destroys and recreates timer, since there is no pause-resume mechanism
+    fun pauseTimer() {
+        timer?.cancel()
+        timer = null
     }
 
-    fun onGameFinishEnd() {
-        _gameFinished.value = false
+    fun resumeTimer() {
+        _remainingTime.value?.let { startTimer(it * ONE_SECOND) }
     }
 
-    fun addToAnswer(char: String) {
-        if (_remainingTime.value!! >= 1) {
-            when (char) {
-                "-" -> if (_userAnswer.value == "") {
-                    _userAnswer.value += char
-                }
-                "/" -> if (_userAnswer.value?.toIntOrNull() != null) {
-                    _userAnswer.value += char
-                }
-                "." -> if (_userAnswer.value == "" || _userAnswer.value == "-") {
-                    _userAnswer.value += "0${char}"
-                } else if (_userAnswer.value?.toIntOrNull() != null) {
-                    _userAnswer.value += char
-                }
-                else -> _userAnswer.value += char
-            }
-        }
-
-
-    }
-
-    fun incrementScore() {
-        _score.value = _score.value?.plus(1)
-    }
-
-    fun backspace() {
-        if (_userAnswer.value != "") {
-            _userAnswer.value = _userAnswer.value?.dropLast(1)
-        }
-    }
-
+    // Prevent memory leak
     override fun onCleared() {
         super.onCleared()
         Log.i("GameViewModel", "GameViewModel destroyed!")

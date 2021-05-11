@@ -40,6 +40,11 @@ class GameFragment : Fragment() {
         //Make edittext automatically focused and disable keyboard
         editTextConfig()
 
+
+        /* ######################################################################
+        * ####################  OBSERVERS  #####################################
+        * ########################################################################*/
+
         viewModel.userAnswer.observe(viewLifecycleOwner, Observer { newUserAnswer ->
             binding.editTextResult.setText(newUserAnswer)
             binding.editTextResult.setSelection(binding.editTextResult.text.length)
@@ -73,6 +78,7 @@ class GameFragment : Fragment() {
 
         return binding.root
     }
+
 
     private fun editTextConfig () {
         binding.editTextResult.requestFocus()
