@@ -56,9 +56,16 @@ class GameFragment : Fragment() {
 
         viewModel.gameFinished.observe(viewLifecycleOwner, Observer { gameFinished ->
             if (gameFinished) {
-                viewModel.onGameFinishEnd()
                 viewModel.pauseTimer()
-                findNavController().navigate(GameFragmentDirections.actionGameFragmentToScoreFragment(viewModel.score.value ?: 0))
+                val timer = object : CountDownTimer(1000, GameViewModel.ONE_SECOND) {
+                    override fun onFinish() {
+                        viewModel.onGameFinishEnd()
+                        findNavController().navigate(GameFragmentDirections.actionGameFragmentToScoreFragment(viewModel.score.value ?: 0))
+                    }
+                    override fun onTick(millisUntilFinished: Long) {
+                    }
+                }
+                timer.start()
             }
         })
 

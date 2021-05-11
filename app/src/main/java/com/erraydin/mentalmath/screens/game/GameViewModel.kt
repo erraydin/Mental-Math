@@ -69,7 +69,6 @@ class GameViewModel : ViewModel() {
     }
 
     fun nextQuestion(difficulty: String) {
-
         val operand1 = Random.nextInt(0, 99)
         val operand2 = Random.nextInt(0, 99)
         val operation = listOf("+", "-", "×").random()
@@ -82,6 +81,7 @@ class GameViewModel : ViewModel() {
 
         _question.value = "$operand1 $operation $operand2 = "
         _userAnswer.value = ""
+
 
     }
 
@@ -130,19 +130,21 @@ class GameViewModel : ViewModel() {
     }
 
     fun addToAnswer(char: String) {
-        when (char) {
-            "-" -> if (_userAnswer.value == "") {
-                _userAnswer.value += char
+        if (_remainingTime.value!! >= 1) {
+            when (char) {
+                "-" -> if (_userAnswer.value == "") {
+                    _userAnswer.value += char
+                }
+                "/" -> if (_userAnswer.value?.toIntOrNull() != null) {
+                    _userAnswer.value += char
+                }
+                "." -> if (_userAnswer.value == "" || _userAnswer.value == "-") {
+                    _userAnswer.value += "0${char}"
+                } else if (_userAnswer.value?.toIntOrNull() != null) {
+                    _userAnswer.value += char
+                }
+                else -> _userAnswer.value += char
             }
-            "/" -> if (_userAnswer.value?.toIntOrNull() != null) {
-                _userAnswer.value += char
-            }
-            "." -> if (_userAnswer.value == "" || _userAnswer.value == "-") {
-                _userAnswer.value += "0${char}"
-            } else if (_userAnswer.value?.toIntOrNull() != null) {
-                _userAnswer.value += char
-            }
-            else -> _userAnswer.value += char
         }
 
 
