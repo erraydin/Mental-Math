@@ -82,10 +82,10 @@ class ChooseDifficultyFragment : Fragment() {
 
     private fun getInfoText (): String {
         return when (difficulty) {
-            "Easy" -> "• Addition \n• Subtraction \n• Multiplication \n• Division"
-            "Medium" -> "• Addition \n• Subtraction \n• Multiplication \n• Division \n• Position changes"
-            "Hard" -> "• Addition \n• Subtraction \n• Multiplication \n• Division \n• Position changes \n• Decimals"
-            "Expert" -> "• Addition \n• Subtraction \n• Multiplication \n• Division \n• Position changes \n• Decimals \n• Fractions"
+            "Easy" -> "• Addition \n• Subtraction \n• Multiplication"
+            "Medium" -> "• Addition \n• Subtraction \n• Multiplication \n• Division"
+            "Hard" -> "• Addition \n• Subtraction \n• Multiplication \n• Division \n• Decimals"
+            "Expert" -> "• Addition \n• Subtraction \n• Multiplication \n• Division \n• Decimals \n• Fractions"
             else -> throw IllegalArgumentException("There is a problem about difficulty!")
         }
     }

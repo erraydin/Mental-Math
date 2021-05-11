@@ -29,8 +29,13 @@ class GameFragment : Fragment() {
         Log.i("GameFragment", "Called ViewModelProvider")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
+
         viewModel.remainingTime.observe(viewLifecycleOwner, Observer { newTime ->
             binding.textViewRemainingTime.text = newTime.toString()
+        })
+
+        viewModel.question.observe(viewLifecycleOwner, Observer { newQuestion ->
+            binding.textViewQuestion.text = newQuestion
         })
 
         viewModel.gameFinished.observe(viewLifecycleOwner, Observer { gameFinished ->

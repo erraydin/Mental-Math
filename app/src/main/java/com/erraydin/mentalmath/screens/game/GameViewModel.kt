@@ -24,7 +24,7 @@ class GameViewModel : ViewModel() {
     companion object {
         const val DONE = 0L
         const val ONE_SECOND = 1000L
-        const val TOTAL_TIME = 12000L
+        const val TOTAL_TIME = 120000L
     }
 
     init {
@@ -32,24 +32,22 @@ class GameViewModel : ViewModel() {
         Log.i("GameViewMode", "GameViewModel created!")
         _remainingTime.value = TOTAL_TIME / ONE_SECOND
         startTimer(TOTAL_TIME)
-//        timer = object : CountDownTimer(TOTAL_TIME, ONE_SECOND) {
-//
-//            override fun onTick(millisUntilFinished: Long) {
-//                _remainingTime.value = millisUntilFinished / ONE_SECOND
-//            }
-//
-//            override fun onFinish() {
-//                // TODO implement what should happen when the timer finishes
-//            }
-//        }
-
         timer?.start()
     }
 
-    private fun nextQuestion(difficulty: String) {
-        val a = "0.25".toDoubleOrNull()
-        val b = "1/4".toDoubleOrNull()
-        Log.i("GameViewModel", "a: $a, b: $b")
+    fun nextQuestion(difficulty: String) {
+
+        val operand1 = Random.nextInt(10, 99)
+        val operand2 = Random.nextInt(10, 99)
+        val operation = listOf("+", "-", "×").random()
+        val result = when (operation) {
+            "+" -> operand1 + operand2
+            "-" -> operand1 - operand2
+            "×" -> operand1 * operand2
+            else -> throw IllegalArgumentException("Operation is invalid!")
+        }
+
+        _question.value = "$operand1 $operation $operand2 = "
 
     }
 

@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingBottom="12dp"
-                    android:text="• Addition \n• Subtraction \n• Multiplication \n• Division \n• Position changes"
+                    android:text="• Addition \n• Subtraction \n• Multiplication \n• Division"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_view_contains_following" />
