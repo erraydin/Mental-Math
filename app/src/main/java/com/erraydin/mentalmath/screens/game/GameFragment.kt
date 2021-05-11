@@ -18,6 +18,7 @@ import com.erraydin.mentalmath.databinding.FragmentGameBinding
 
 
 class GameFragment : Fragment() {
+    private lateinit var viewModelFactory: GameViewModelFactory
     private lateinit var viewModel: GameViewModel
     private lateinit var binding: FragmentGameBinding
 
@@ -27,16 +28,17 @@ class GameFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
-        Log.i("GameFragment", "Called ViewModelProvider")
 
 
-        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        val args = arguments?.let { GameFragmentArgs.fromBundle(it) }
+        viewModelFactory = GameViewModelFactory(args?.difficulty ?: "Medium")
+        viewModel = ViewModelProvider(this, viewModelFactory).get(GameViewModel::class.java)
+
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
 
         //Make edittext automatically focused and disable keyboard
         editTextConfig()
-
 
         viewModel.userAnswer.observe(viewLifecycleOwner, Observer { newUserAnswer ->
             binding.editTextResult.setText(newUserAnswer)
@@ -45,7 +47,7 @@ class GameFragment : Fragment() {
                 viewModel.incrementScore()
                 val timer = object : CountDownTimer(100, GameViewModel.ONE_SECOND) {
                     override fun onFinish() {
-                        viewModel.nextQuestion("Easy")
+                        viewModel.nextQuestion()
                     }
                     override fun onTick(millisUntilFinished: Long) {
                     }

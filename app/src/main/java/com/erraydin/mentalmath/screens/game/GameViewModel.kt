@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import java.lang.IllegalArgumentException
 import kotlin.random.Random
 
-class GameViewModel : ViewModel() {
+class GameViewModel(difficulty: String) : ViewModel() {
     private val _remainingTime = MutableLiveData<Long>()
     val remainingTime: LiveData<Long>
         get() = _remainingTime
@@ -14,8 +14,7 @@ class GameViewModel : ViewModel() {
     val remainingTimeString = Transformations.map(remainingTime) { time ->
         time.toString()
     }
-
-
+    val difficulty = difficulty
     private val _gameFinished = MutableLiveData<Boolean>()
     val gameFinished: LiveData<Boolean>
         get() = _gameFinished
@@ -41,6 +40,10 @@ class GameViewModel : ViewModel() {
     private var timer: CountDownTimer? = null
 
     companion object {
+//        const val EASY = "Easy"
+//        const val MEDIUM = "Medium"
+//        const val HARD = "Hard"
+//        const val EXPERT = "Expert"
         const val BUTTON_0 = "0"
         const val BUTTON_1 = "1"
         const val BUTTON_2 = "2"
@@ -59,7 +62,7 @@ class GameViewModel : ViewModel() {
     }
 
     init {
-        nextQuestion("Easy")
+        nextQuestion()
         Log.i("GameViewMode", "GameViewModel created!")
         _score.value = 0
         _userAnswer.value = ""
@@ -68,7 +71,7 @@ class GameViewModel : ViewModel() {
         timer?.start()
     }
 
-    fun nextQuestion(difficulty: String) {
+    fun nextQuestion() {
         val operand1 = Random.nextInt(0, 99)
         val operand2 = Random.nextInt(0, 99)
         val operation = listOf("+", "-", "×").random()
@@ -91,7 +94,7 @@ class GameViewModel : ViewModel() {
         }
 
         _userAnswer.value = ""
-        nextQuestion("Easy")
+        nextQuestion()
     }
 
     fun pauseTimer() {

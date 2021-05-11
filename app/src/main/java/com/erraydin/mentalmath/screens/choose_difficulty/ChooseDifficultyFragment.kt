@@ -36,7 +36,7 @@ class ChooseDifficultyFragment : Fragment() {
         selectedColor = context?.let { it1 -> ContextCompat.getColor(it1, R.color.selected_color) }!!
 
         binding.buttonStartGame.setOnClickListener {
-            findNavController().navigate(ChooseDifficultyFragmentDirections.actionChooseDifficultyFragmentToGameFragment())
+            findNavController().navigate(ChooseDifficultyFragmentDirections.actionChooseDifficultyFragmentToGameFragment(difficulty))
         }
 
         binding.buttonEasy.setOnClickListener {
