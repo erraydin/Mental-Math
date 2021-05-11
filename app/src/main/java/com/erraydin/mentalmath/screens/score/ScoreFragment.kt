@@ -18,6 +18,8 @@ class ScoreFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_score, container, false)
+        val args = arguments?.let { ScoreFragmentArgs.fromBundle(it) }
+        binding.textViewScore.text = args?.score.toString()
         return binding.root
     }
 

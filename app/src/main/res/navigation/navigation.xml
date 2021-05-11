@@ -28,7 +28,7 @@
         <action
             android:id="@+id/action_chooseDifficultyFragment_to_gameFragment"
             app:destination="@id/gameFragment"
-            app:popUpTo="@id/chooseDifficultyFragment" />
+            app:popUpTo="@id/titleFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_scoreFragment_to_titleFragment"
             app:destination="@id/titleFragment" />
+        <argument
+            android:name="score"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"

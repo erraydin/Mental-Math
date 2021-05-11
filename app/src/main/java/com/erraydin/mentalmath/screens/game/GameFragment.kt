@@ -70,7 +70,7 @@ class GameFragment : Fragment() {
             if (gameFinished) {
                 viewModel.onGameFinishEnd()
                 viewModel.pauseTimer()
-                findNavController().navigate(GameFragmentDirections.actionGameFragmentToScoreFragment())
+                findNavController().navigate(GameFragmentDirections.actionGameFragmentToScoreFragment(viewModel.score.value ?: 0))
             }
         })
 
