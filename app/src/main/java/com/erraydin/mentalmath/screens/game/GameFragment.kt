@@ -48,7 +48,7 @@ class GameFragment : Fragment() {
         viewModel.userAnswer.observe(viewLifecycleOwner, Observer { newUserAnswer ->
             binding.editTextResult.setText(newUserAnswer)
             binding.editTextResult.setSelection(binding.editTextResult.text.length)
-            if (newUserAnswer == viewModel.getResult().toString()) {
+            if (newUserAnswer == viewModel.getResult()) {
                 viewModel.incrementScore()
                 val timer = object : CountDownTimer(100, GameViewModel.ONE_SECOND) {
                     override fun onFinish() {

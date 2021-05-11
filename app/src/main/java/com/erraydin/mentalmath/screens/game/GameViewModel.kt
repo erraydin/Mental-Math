@@ -7,6 +7,29 @@ import java.lang.IllegalArgumentException
 import kotlin.random.Random
 
 class GameViewModel(difficulty: String) : ViewModel() {
+
+    companion object {
+        const val EASY = "Easy"
+        const val MEDIUM = "Medium"
+        const val HARD = "Hard"
+        const val EXPERT = "Expert"
+        const val BUTTON_0 = "0"
+        const val BUTTON_1 = "1"
+        const val BUTTON_2 = "2"
+        const val BUTTON_3 = "3"
+        const val BUTTON_4 = "4"
+        const val BUTTON_5 = "5"
+        const val BUTTON_6 = "6"
+        const val BUTTON_7 = "7"
+        const val BUTTON_8 = "8"
+        const val BUTTON_9 = "9"
+        const val BUTTON_DOT = "."
+        const val BUTTON_DIVISION = "/"
+        const val BUTTON_MINUS = "-"
+        const val ONE_SECOND = 1000L
+        const val TOTAL_TIME = 12000L
+    }
+
     private val _remainingTime = MutableLiveData<Long>()
     private val remainingTime: LiveData<Long>
         get() = _remainingTime
@@ -35,31 +58,19 @@ class GameViewModel(difficulty: String) : ViewModel() {
         score.toString()
     }
 
-    private var result: Int = 0
+    //Choose operation in a weighted way depending on the difficulty
+    private var operations: List<String> = when (difficulty) {
+        EASY -> listOf("+", "+", "-", "-", "×")
+        MEDIUM -> listOf("+", "+", "-", "-", "×", "/")
+        HARD -> listOf("+", "+", "-", "-", "×", "×", "/")
+        EXPERT -> listOf("+", "-", "×", "/")
+        else -> throw IllegalArgumentException("Invalid Difficulty!")
+    }
 
+    private var result: String = ""
     private var timer: CountDownTimer? = null
 
-    companion object {
-        //        const val EASY = "Easy"
-//        const val MEDIUM = "Medium"
-//        const val HARD = "Hard"
-//        const val EXPERT = "Expert"
-        const val BUTTON_0 = "0"
-        const val BUTTON_1 = "1"
-        const val BUTTON_2 = "2"
-        const val BUTTON_3 = "3"
-        const val BUTTON_4 = "4"
-        const val BUTTON_5 = "5"
-        const val BUTTON_6 = "6"
-        const val BUTTON_7 = "7"
-        const val BUTTON_8 = "8"
-        const val BUTTON_9 = "9"
-        const val BUTTON_DOT = "."
-        const val BUTTON_DIVISION = "/"
-        const val BUTTON_MINUS = "-"
-        const val ONE_SECOND = 1000L
-        const val TOTAL_TIME = 12000L
-    }
+
 
     init {
         nextQuestion()
@@ -78,14 +89,16 @@ class GameViewModel(difficulty: String) : ViewModel() {
 
 
     fun nextQuestion() {
+        val operation = operations.random()
         val operand1 = Random.nextInt(0, 99)
         val operand2 = Random.nextInt(0, 99)
-        val operation = listOf("+", "-", "×").random()
+
         result = when (operation) {
-            "+" -> operand1 + operand2
-            "-" -> operand1 - operand2
-            "×" -> operand1 * operand2
-            else -> throw IllegalArgumentException("Operation is invalid!")
+            "+" -> (operand1 + operand2).toString()
+            "-" -> (operand1 - operand2).toString()
+            "×" -> (operand1 * operand2).toString()
+            "/" -> (operand1 / operand2).toString()
+            else -> throw IllegalArgumentException("Operation is invalid:   $operation!")
         }
 
         _question.value = "$operand1 $operation $operand2 = "
@@ -137,7 +150,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
         _gameFinished.value = false
     }
 
-    fun getResult(): Int {
+    fun getResult(): String {
         return result
     }
 
