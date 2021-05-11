@@ -32,6 +32,8 @@ class GameFragment : Fragment() {
         //Make edittext automatically focused and disable keyboard
         binding.editTextResult.requestFocus()
         binding.editTextResult.showSoftInputOnFocus = false
+        binding.editTextResult.isLongClickable = false
+        binding.editTextResult.setTextIsSelectable(false)
 
 
         setButtonOnClickListeners()
