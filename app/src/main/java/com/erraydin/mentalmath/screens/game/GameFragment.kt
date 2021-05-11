@@ -1,6 +1,7 @@
 package com.erraydin.mentalmath.screens.game
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.format.DateUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -46,8 +47,23 @@ class GameFragment : Fragment() {
             binding.textViewQuestion.text = newQuestion
         })
 
+        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
+            binding.textViewScore.text = newScore.toString()
+        })
+
         viewModel.userAnswer.observe(viewLifecycleOwner, Observer { newUserAnswer ->
             binding.editTextResult.setText(newUserAnswer)
+            if (newUserAnswer == viewModel.getResult().toString()) {
+                viewModel.incrementScore()
+                val timer = object : CountDownTimer(100, GameViewModel.ONE_SECOND) {
+                    override fun onFinish() {
+                        viewModel.nextQuestion("Easy")
+                    }
+                    override fun onTick(millisUntilFinished: Long) {
+                    }
+                }
+                timer.start()
+            }
         })
 
         viewModel.gameFinished.observe(viewLifecycleOwner, Observer { gameFinished ->
@@ -95,7 +111,7 @@ class GameFragment : Fragment() {
             binding.editTextResult.setSelection(binding.editTextResult.text.length)
         }
         binding.button8.setOnClickListener {
-            viewModel.addToAnswer("2")
+            viewModel.addToAnswer("8")
             binding.editTextResult.setSelection(binding.editTextResult.text.length)
         }
         binding.button9.setOnClickListener {

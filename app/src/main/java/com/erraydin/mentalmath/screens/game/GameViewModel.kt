@@ -23,6 +23,10 @@ class GameViewModel : ViewModel() {
     val userAnswer: LiveData<String>
         get() = _userAnswer
 
+    private val _score = MutableLiveData<Int>()
+    val score : LiveData<Int>
+        get() = _score
+
     private var result: Int = 0
 
     private var timer: CountDownTimer? = null
@@ -36,6 +40,7 @@ class GameViewModel : ViewModel() {
     init {
         nextQuestion("Easy")
         Log.i("GameViewMode", "GameViewModel created!")
+        _score.value = 0
         _userAnswer.value = ""
         _remainingTime.value = TOTAL_TIME / ONE_SECOND
         startTimer(TOTAL_TIME)
@@ -44,8 +49,8 @@ class GameViewModel : ViewModel() {
 
     fun nextQuestion(difficulty: String) {
 
-        val operand1 = Random.nextInt(10, 99)
-        val operand2 = Random.nextInt(10, 99)
+        val operand1 = Random.nextInt(0, 99)
+        val operand2 = Random.nextInt(0, 99)
         val operation = listOf("+", "-", "×").random()
         result = when (operation) {
             "+" -> operand1 + operand2
@@ -85,6 +90,9 @@ class GameViewModel : ViewModel() {
         }
 
     }
+    fun getResult() : Int {
+        return result
+    }
 
     fun onGameFinishEnd() {
         _gameFinished.value = false
@@ -93,6 +101,10 @@ class GameViewModel : ViewModel() {
     fun addToAnswer(char: String) {
         _userAnswer.value = _userAnswer.value + char
 
+    }
+
+    fun incrementScore() {
+        _score.value = _score.value?.plus(1)
     }
 
     fun backspace() {
