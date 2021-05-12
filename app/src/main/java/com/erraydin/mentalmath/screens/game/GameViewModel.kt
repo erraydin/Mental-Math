@@ -27,7 +27,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
         const val BUTTON_DIVISION = "/"
         const val BUTTON_MINUS = "-"
         const val ONE_SECOND = 1000L
-        const val TOTAL_TIME = 12000L
+        const val TOTAL_TIME = 120000L
     }
 
     private val _remainingTime = MutableLiveData<Long>()
@@ -60,9 +60,9 @@ class GameViewModel(difficulty: String) : ViewModel() {
 
     //Choose operation in a weighted way depending on the difficulty
     private var operations: List<String> = when (difficulty) {
-        EASY -> listOf("+", "+", "-", "-", "×")
-        MEDIUM -> listOf("+", "+", "-", "-", "×", "/")
-        HARD -> listOf("+", "+", "-", "-", "×", "×", "/")
+        EASY -> listOf("+", "+", "+", "-", "-", "-", "×")
+        MEDIUM -> listOf("+", "+", "+", "-", "-", "-", "×", "/")
+        HARD -> listOf("+", "+", "-", "-", "×", "/")
         EXPERT -> listOf("+", "-", "×", "/")
         else -> throw IllegalArgumentException("Invalid Difficulty!")
     }
@@ -90,22 +90,121 @@ class GameViewModel(difficulty: String) : ViewModel() {
 
     fun nextQuestion() {
         val operation = operations.random()
+        when (difficulty) {
+            EASY -> intNoDivision(operation)
+            MEDIUM -> intAllOperations(operation, 15, 99)
+            HARD -> intDecimalAllOperations(operation, 23, 99)
+            EXPERT -> intDecimalAllOperations(operation, 23, 99)
+            else -> throw IllegalArgumentException("illegal difficulty: $difficulty")
+        }
+    }
+
+
+    private fun generateIntOperandsNonDivision(operation: String,): List<Int> {
         val operand1 = Random.nextInt(0, 99)
         val operand2 = Random.nextInt(0, 99)
-
-        result = when (operation) {
-            "+" -> (operand1 + operand2).toString()
-            "-" -> (operand1 - operand2).toString()
-            "×" -> (operand1 * operand2).toString()
-            "/" -> (operand1 / operand2).toString()
+        val ans = when (operation) {
+            "+" -> (operand1 + operand2)
+            "-" -> (operand1 - operand2)
+            "×" -> (operand1 * operand2)
             else -> throw IllegalArgumentException("Operation is invalid:   $operation!")
         }
+        return listOf(operand1, operand2, ans)
+    }
 
+    private fun generateIntOperandsDivision(maxDivisor: Int, maxDividend: Int): List<Int> {
+        val operand2 = Random.nextInt(1, maxDivisor)
+        val ans = Random.nextInt(0, maxDividend)
+        val operand1 =  ans * operand2
+        return listOf(operand1, operand2, ans)
+    }
+
+    //Operands are integers, there is no division
+    private fun intNoDivision(operation: String) {
+        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
+        result = ans.toString()
         _question.value = "$operand1 $operation $operand2 = "
         _userAnswer.value = ""
+    }
 
+
+    // Operands are integers, all operations
+    private fun intAllOperations(operation: String, maxDivisor: Int, maxDividend: Int) {
+        when (operation) {
+            "/" -> {
+                val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
+                result = ans.toString()
+                _question.value = "$operand1 $operation $operand2 = "
+                _userAnswer.value = ""
+            }
+            else -> intNoDivision(operation)
+        }
+    }
+
+    private fun shiftDecimals(num:Int, decimalShift: Int) : Double {
+        return  num.toDouble() / decimalShift
 
     }
+
+    // Operands are integers or decimals, all operations
+    private fun intDecimalAllOperations(operation: String, maxDivisor: Int, maxDividend: Int) {
+        when(operation) {
+            // Only integers in the case of division
+            "/" -> {
+                val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
+                result = ans.toString()
+                _question.value = "$operand1 $operation $operand2 = "
+                _userAnswer.value = ""
+            }
+            // No division
+            else -> {
+                when(Random.nextBoolean()) {
+                    // Operands are decimals
+                    true -> {
+                        val decimalShift = listOf(10, 100).random()
+                        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
+
+                        result = when(operation) {
+                            "×" -> shiftDecimals(ans, decimalShift * decimalShift).toString()
+                            else -> shiftDecimals(ans, decimalShift).toString()
+                        }
+
+                        _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${shiftDecimals(operand2, decimalShift)} = "
+                        _userAnswer.value = ""
+                    }
+                    // Operands are ints
+                    false -> {
+                        intNoDivision(operation)
+                    }
+                }
+            }
+        }
+//        when(Random.nextBoolean()) {
+//            //Operands are decimals
+//            true -> {
+//                val decimalShift = listOf(10, 100).random()
+//                when (operation) {
+//                    "/" -> {
+//                        val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
+//                        result = shiftDecimals(ans, decimalShift).toString()
+//                        _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${shiftDecimals(operand2, decimalShift)} = "
+//                        _userAnswer.value = ""
+//                    }
+//                    else -> {
+//                        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
+//                        result = shiftDecimals(ans, decimalShift).toString()
+//                        _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${shiftDecimals(operand2, decimalShift)} = "
+//                        _userAnswer.value = ""
+//                    }
+//                }
+//
+//            }
+//            //operands are ints
+//            false -> intAllOperations(operation, maxDivisor, maxDividend)
+//        }
+    }
+
+
 
     fun skipQuestion() {
         if (_score.value != null && _score.value!! > 0) {

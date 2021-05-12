@@ -11,9 +11,21 @@ class Rational(num: Int, denom: Int) {
         if (denom == 0) throw IllegalArgumentException("Denominator cannot be 0!")
 
         val gcdNumDenom = gcd(num, denom)
-        numerator = num / gcdNumDenom
-        denominator = denom / gcdNumDenom
+
+        if ( num * denom < 0) {
+            numerator = -abs(num)/ gcdNumDenom
+            denominator = abs(denom) / gcdNumDenom
+        } else {
+            numerator = abs(num)/ gcdNumDenom
+            denominator = abs(denom) / gcdNumDenom
+        }
+
     }
+
+    operator fun unaryMinus() = Rational(
+        -numerator,
+        denominator
+    )
 
     operator fun times(other: Rational) = Rational(
         numerator * other.numerator,
@@ -50,6 +62,6 @@ class Rational(num: Int, denom: Int) {
     }
 
     override fun toString(): String {
-        return "$numerator / $denominator"
+        return "$numerator/$denominator"
     }
 }
