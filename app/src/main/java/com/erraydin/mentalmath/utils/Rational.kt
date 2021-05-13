@@ -48,8 +48,19 @@ class Rational(num: Int, denom: Int) {
     )
 
     private fun gcd(a: Int, b: Int): Int {
+        if (a == 0 && b == 0) {
+            throw IllegalArgumentException("At least one input should be nonzero!")
+        }
+
         var n1 = abs(a)
         var n2 = abs(b)
+
+        if (n1 == 0){
+            return n2
+        }
+        if (n2 == 0) {
+            return n1
+        }
 
         while (n1 != n2) {
             if (n1 > n2) {

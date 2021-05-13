@@ -3,6 +3,7 @@ package com.erraydin.mentalmath.screens.game
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
+import com.erraydin.mentalmath.utils.Rational
 import java.lang.IllegalArgumentException
 import kotlin.random.Random
 
@@ -88,12 +89,13 @@ class GameViewModel(difficulty: String) : ViewModel() {
 
 
     fun nextQuestion() {
+        _userAnswer.value = ""
         val operation = operations.random()
         when (difficulty) {
             EASY -> intNoDivision(operation)
             MEDIUM -> intAllOperations(operation, 15, 99)
             HARD -> intDecimalAllOperations(operation, 23, 99)
-            EXPERT -> intDecimalAllOperations(operation, 23, 99)
+            EXPERT -> allOperandsOperations(operation)
             else -> throw IllegalArgumentException("illegal difficulty: $difficulty")
         }
     }
@@ -123,7 +125,6 @@ class GameViewModel(difficulty: String) : ViewModel() {
         val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
         result = ans.toString()
         _question.value = "$operand1 $operation $operand2 = "
-        _userAnswer.value = ""
     }
 
 
@@ -134,7 +135,6 @@ class GameViewModel(difficulty: String) : ViewModel() {
                 val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
                 result = ans.toString()
                 _question.value = "$operand1 $operation $operand2 = "
-                _userAnswer.value = ""
             }
             else -> intNoDivision(operation)
         }
@@ -153,7 +153,6 @@ class GameViewModel(difficulty: String) : ViewModel() {
                 val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
                 result = ans.toString()
                 _question.value = "$operand1 $operation $operand2 = "
-                _userAnswer.value = ""
             }
             // No division
             else -> {
@@ -168,15 +167,9 @@ class GameViewModel(difficulty: String) : ViewModel() {
                             else -> shiftDecimals(ans, decimalShift).toString()
                         }
 
-
-
                         _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${
-                            shiftDecimals(
-                                operand2,
-                                decimalShift
-                            )
+                            shiftDecimals(operand2, decimalShift)
                         } = "
-                        _userAnswer.value = ""
                     }
                     // Operands are ints
                     false -> {
@@ -187,23 +180,38 @@ class GameViewModel(difficulty: String) : ViewModel() {
         }
     }
 
-//    private fun allOperandsOperations(operation: String) {
-//        val isFraction = listOf(false, false, true).random()
-//        when (isFraction) {
-//            true -> {
-//
-//            }
-//            false -> intDecimalAllOperations(operation, 31, 99)
-//        }
-//    }
+    private fun allOperandsOperations(operation: String) {
+        val isFraction = listOf(false, false, true).random()
+        Log.i("isFraction:", "$isFraction")
+        when (isFraction) {
+            true -> {
+                val numerator1 = Random.nextInt(0, 9)
+                val denominator1 = Random.nextInt(1, 9)
+                val numerator2 = Random.nextInt(0, 9)
+                val denominator2 = Random.nextInt(1, 9)
+                val operand1 = Rational(numerator1, denominator1)
+                val operand2 = Rational(numerator2, denominator2)
+                result = when (operation) {
+                    "+" -> (operand1 + operand2).toString()
+                    "-" -> (operand1 - operand2).toString()
+                    "×" -> (operand1 * operand2).toString()
+                    "/" -> (operand1 / operand2).toString()
+                    else -> throw IllegalArgumentException("Operation is invalid:   $operation!")
+                }
+
+                _question.value =
+                    "$numerator1/$denominator1 $operation $numerator2/$denominator2 = "
+
+            }
+            false -> intDecimalAllOperations(operation, 31, 99)
+        }
+    }
 
 
     fun skipQuestion() {
         if (_score.value != null && _score.value!! > 0) {
             _score.value = _score.value?.minus(1)
         }
-
-        _userAnswer.value = ""
         nextQuestion()
     }
 
