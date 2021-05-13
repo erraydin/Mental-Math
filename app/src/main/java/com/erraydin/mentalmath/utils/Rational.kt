@@ -73,6 +73,9 @@ class Rational(num: Int, denom: Int) {
     }
 
     override fun toString(): String {
-        return "$numerator/$denominator"
+        return when(denominator){
+            1 -> "$numerator"
+            else -> "$numerator/$denominator"
+        }
     }
 }

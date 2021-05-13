@@ -167,6 +167,11 @@ class GameViewModel(difficulty: String) : ViewModel() {
                             else -> shiftDecimals(ans, decimalShift).toString()
                         }
 
+                        // if the answer is 12.0, and user inputs 12, it should be correct
+                        if (result.takeLast(2) == ".0"){
+                            result = result.dropLast(2)
+                        }
+
                         _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${
                             shiftDecimals(operand2, decimalShift)
                         } = "
@@ -189,6 +194,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
                 val denominator1 = Random.nextInt(1, 9)
                 val numerator2 = Random.nextInt(0, 9)
                 val denominator2 = Random.nextInt(1, 9)
+
                 val operand1 = Rational(numerator1, denominator1)
                 val operand2 = Rational(numerator2, denominator2)
                 result = when (operation) {
