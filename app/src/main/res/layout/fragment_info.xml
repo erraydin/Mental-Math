@@ -1,16 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".screens.info.InfoFragment">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Info Fragment" />
+        android:background="@color/background_dark">
 
-</FrameLayout>
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:id="@+id/text_view_catch_phrase"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/catch_phrase"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.88" />
+
+        <TextView
+            android:id="@+id/text_view_main_rules_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Main rules:"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/text_view_catch_phrase" />
+
+        <TextView
+            android:id="@+id/text_view_rule_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="● You have 120 seconds to answer as many questions as you can correctly."
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_main_rules_title"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:id="@+id/text_view_rule_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="● Each correct answer will add 1 to your score"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_rule_1"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+
+            android:id="@+id/text_view_rule_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="● Each skipped question will remove 1 from your score"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_rule_2"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:layout_marginTop="24sp"
+            android:gravity="center"
+            android:id="@+id/text_view_hints"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Hints:"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_rule_3"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:id="@+id/text_view_hint_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="● You are only allowed the input the following types:"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_hints"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:id="@+id/text_view_type_integer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="    1) Integers:  12, -34 etc."
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_hint_1"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:id="@+id/text_view_type_decimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="    2) Decimals:  12.24, -34.09 etc."
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_type_integer"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:id="@+id/text_view_type_fraction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="    3) Fractions:  12/7, -3/5 etc."
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_type_decimal"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:justificationMode="inter_word"
+            android:layout_marginTop="8dp"
+            android:id="@+id/text_view_hint_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="● Your answer type should be same as the operands. For example,
+the answer for '0.2 + 0.3' should be 0.5. If you input 1/2, it won't be accepted. "
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_type_fraction"
+            app:layout_constraintWidth_percent="0.85" />
+
+        <TextView
+            android:justificationMode="inter_word"
+            android:layout_marginTop="8dp"
+            android:id="@+id/text_view_hint_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="● Your fraction answers should be in their simplest form. For example,
+the answer for '1/6 + 1/3' should be 1/2. If you input 2/4, it won't be accepted."
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_hint_2"
+            app:layout_constraintWidth_percent="0.85" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

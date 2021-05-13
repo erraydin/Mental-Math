@@ -71,7 +71,6 @@ class GameViewModel(difficulty: String) : ViewModel() {
     private var timer: CountDownTimer? = null
 
 
-
     init {
         nextQuestion()
         Log.i("GameViewMode", "GameViewModel created!")
@@ -100,7 +99,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
     }
 
 
-    private fun generateIntOperandsNonDivision(operation: String,): List<Int> {
+    private fun generateIntOperandsNonDivision(operation: String): List<Int> {
         val operand1 = Random.nextInt(0, 99)
         val operand2 = Random.nextInt(0, 99)
         val ans = when (operation) {
@@ -115,7 +114,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
     private fun generateIntOperandsDivision(maxDivisor: Int, maxDividend: Int): List<Int> {
         val operand2 = Random.nextInt(1, maxDivisor)
         val ans = Random.nextInt(0, maxDividend)
-        val operand1 =  ans * operand2
+        val operand1 = ans * operand2
         return listOf(operand1, operand2, ans)
     }
 
@@ -141,14 +140,14 @@ class GameViewModel(difficulty: String) : ViewModel() {
         }
     }
 
-    private fun shiftDecimals(num:Int, decimalShift: Int) : Double {
-        return  num.toDouble() / decimalShift
+    private fun shiftDecimals(num: Int, decimalShift: Int): Double {
+        return num.toDouble() / decimalShift
 
     }
 
     // Operands are integers or decimals, all operations
     private fun intDecimalAllOperations(operation: String, maxDivisor: Int, maxDividend: Int) {
-        when(operation) {
+        when (operation) {
             // Only integers in the case of division
             "/" -> {
                 val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
@@ -158,18 +157,25 @@ class GameViewModel(difficulty: String) : ViewModel() {
             }
             // No division
             else -> {
-                when(Random.nextBoolean()) {
+                when (Random.nextBoolean()) {
                     // Operands are decimals
                     true -> {
                         val decimalShift = listOf(10, 100).random()
                         val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
 
-                        result = when(operation) {
+                        result = when (operation) {
                             "×" -> shiftDecimals(ans, decimalShift * decimalShift).toString()
                             else -> shiftDecimals(ans, decimalShift).toString()
                         }
 
-                        _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${shiftDecimals(operand2, decimalShift)} = "
+
+
+                        _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${
+                            shiftDecimals(
+                                operand2,
+                                decimalShift
+                            )
+                        } = "
                         _userAnswer.value = ""
                     }
                     // Operands are ints
@@ -179,31 +185,17 @@ class GameViewModel(difficulty: String) : ViewModel() {
                 }
             }
         }
-//        when(Random.nextBoolean()) {
-//            //Operands are decimals
-//            true -> {
-//                val decimalShift = listOf(10, 100).random()
-//                when (operation) {
-//                    "/" -> {
-//                        val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
-//                        result = shiftDecimals(ans, decimalShift).toString()
-//                        _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${shiftDecimals(operand2, decimalShift)} = "
-//                        _userAnswer.value = ""
-//                    }
-//                    else -> {
-//                        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
-//                        result = shiftDecimals(ans, decimalShift).toString()
-//                        _question.value = "${shiftDecimals(operand1, decimalShift)} $operation ${shiftDecimals(operand2, decimalShift)} = "
-//                        _userAnswer.value = ""
-//                    }
-//                }
-//
-//            }
-//            //operands are ints
-//            false -> intAllOperations(operation, maxDivisor, maxDividend)
-//        }
     }
 
+//    private fun allOperandsOperations(operation: String) {
+//        val isFraction = listOf(false, false, true).random()
+//        when (isFraction) {
+//            true -> {
+//
+//            }
+//            false -> intDecimalAllOperations(operation, 31, 99)
+//        }
+//    }
 
 
     fun skipQuestion() {
@@ -218,20 +210,38 @@ class GameViewModel(difficulty: String) : ViewModel() {
     //Handles in game keyboard character-button presses
     fun addToAnswer(char: String) {
         if (_remainingTime.value!! >= 1) {
-            when (char) {
-                "-" -> if (_userAnswer.value == "") {
+            if (_userAnswer.value != "0" && _userAnswer.value != "-0") {
+                when (char) {
+                    "0" -> {
+                        if (_userAnswer.value?.lastOrNull() != '/') {
+                            _userAnswer.value += char
+                        }
+                    }
+                    "-" -> {
+                        if (_userAnswer.value == "") {
+                            _userAnswer.value += char
+                        }
+                    }
+                    "/" -> {
+                        if (_userAnswer.value?.toIntOrNull() != null) {
+                            _userAnswer.value += char
+                        }
+                    }
+                    "." -> {
+                        if (_userAnswer.value == "" || _userAnswer.value == "-") {
+                            _userAnswer.value += "0${char}"
+                        } else if (_userAnswer.value?.toIntOrNull() != null) {
+                            _userAnswer.value += char
+                        }
+                    }
+                    else -> _userAnswer.value += char
+                }
+            } else {
+                if (char == ".") {
                     _userAnswer.value += char
                 }
-                "/" -> if (_userAnswer.value?.toIntOrNull() != null) {
-                    _userAnswer.value += char
-                }
-                "." -> if (_userAnswer.value == "" || _userAnswer.value == "-") {
-                    _userAnswer.value += "0${char}"
-                } else if (_userAnswer.value?.toIntOrNull() != null) {
-                    _userAnswer.value += char
-                }
-                else -> _userAnswer.value += char
             }
+
         }
     }
 
