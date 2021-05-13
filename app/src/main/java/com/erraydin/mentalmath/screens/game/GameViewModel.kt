@@ -61,8 +61,8 @@ class GameViewModel(difficulty: String) : ViewModel() {
 
     //Choose operation in a weighted way depending on the difficulty
     private var operations: List<String> = when (difficulty) {
-        EASY -> listOf("+", "+", "+", "-", "-", "-", "×")
-        MEDIUM -> listOf("+", "+", "+", "-", "-", "-", "×", "/")
+        EASY -> listOf("+", "+", "-", "-", "×")
+        MEDIUM -> listOf("+", "+", "-", "-", "×", "/")
         HARD -> listOf("+", "+", "-", "-", "×", "/")
         EXPERT -> listOf("+", "-", "×", "/")
         else -> throw IllegalArgumentException("Invalid Difficulty!")
@@ -92,18 +92,18 @@ class GameViewModel(difficulty: String) : ViewModel() {
         _userAnswer.value = ""
         val operation = operations.random()
         when (difficulty) {
-            EASY -> intNoDivision(operation)
-            MEDIUM -> intAllOperations(operation, 15, 99)
-            HARD -> intDecimalAllOperations(operation, 23, 99)
-            EXPERT -> allOperandsOperations(operation)
+            EASY -> intNoDivision(operation, 21)
+            MEDIUM -> intAllOperations(operation, 15, 99, 41)
+            HARD -> intDecimalAllOperations(operation, 23, 99, 81)
+            EXPERT -> allOperandsOperations(operation, 31, 99, 99, 15)
             else -> throw IllegalArgumentException("illegal difficulty: $difficulty")
         }
     }
 
 
-    private fun generateIntOperandsNonDivision(operation: String): List<Int> {
-        val operand1 = Random.nextInt(0, 99)
-        val operand2 = Random.nextInt(0, 99)
+    private fun generateIntOperandsNonDivision(operation: String, maxOperand: Int): List<Int> {
+        val operand1 = Random.nextInt(0, maxOperand)
+        val operand2 = Random.nextInt(0, maxOperand)
         val ans = when (operation) {
             "+" -> (operand1 + operand2)
             "-" -> (operand1 - operand2)
@@ -121,22 +121,26 @@ class GameViewModel(difficulty: String) : ViewModel() {
     }
 
     //Operands are integers, there is no division
-    private fun intNoDivision(operation: String) {
-        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
+    private fun intNoDivision(operation: String, maxMultiplicand: Int) {
+        val (operand1, operand2, ans) = when (operation) {
+            "×" -> generateIntOperandsNonDivision(operation, maxMultiplicand)
+
+            else -> generateIntOperandsNonDivision(operation, 99)
+        }
         result = ans.toString()
         _question.value = "$operand1 $operation $operand2 = "
     }
 
 
     // Operands are integers, all operations
-    private fun intAllOperations(operation: String, maxDivisor: Int, maxDividend: Int) {
+    private fun intAllOperations(operation: String, maxDivisor: Int, maxDividend: Int, maxMultiplicand: Int) {
         when (operation) {
             "/" -> {
                 val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
                 result = ans.toString()
                 _question.value = "$operand1 $operation $operand2 = "
             }
-            else -> intNoDivision(operation)
+            else -> intNoDivision(operation, maxMultiplicand)
         }
     }
 
@@ -146,7 +150,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
     }
 
     // Operands are integers or decimals, all operations
-    private fun intDecimalAllOperations(operation: String, maxDivisor: Int, maxDividend: Int) {
+    private fun intDecimalAllOperations(operation: String, maxDivisor: Int, maxDividend: Int, maxMultiplicand: Int) {
         when (operation) {
             // Only integers in the case of division
             "/" -> {
@@ -160,7 +164,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
                     // Operands are decimals
                     true -> {
                         val decimalShift = listOf(10, 100).random()
-                        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation)
+                        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation, maxMultiplicand)
 
                         result = when (operation) {
                             "×" -> shiftDecimals(ans, decimalShift * decimalShift).toString()
@@ -178,22 +182,22 @@ class GameViewModel(difficulty: String) : ViewModel() {
                     }
                     // Operands are ints
                     false -> {
-                        intNoDivision(operation)
+                        intNoDivision(operation, maxMultiplicand)
                     }
                 }
             }
         }
     }
 
-    private fun allOperandsOperations(operation: String) {
+    private fun allOperandsOperations(operation: String, maxDivisor: Int, maxDividend: Int, maxMultiplicand: Int, maxFracTerm: Int) {
         val isFraction = listOf(false, false, true).random()
         Log.i("isFraction:", "$isFraction")
         when (isFraction) {
             true -> {
-                val numerator1 = Random.nextInt(0, 9)
-                val denominator1 = Random.nextInt(1, 9)
-                val numerator2 = Random.nextInt(0, 9)
-                val denominator2 = Random.nextInt(1, 9)
+                val numerator1 = Random.nextInt(0, maxFracTerm)
+                val denominator1 = Random.nextInt(1, maxFracTerm)
+                val numerator2 = Random.nextInt(0, maxFracTerm)
+                val denominator2 = Random.nextInt(1, maxFracTerm)
 
                 val operand1 = Rational(numerator1, denominator1)
                 val operand2 = Rational(numerator2, denominator2)
@@ -209,7 +213,7 @@ class GameViewModel(difficulty: String) : ViewModel() {
                     "$numerator1/$denominator1 $operation $numerator2/$denominator2 = "
 
             }
-            false -> intDecimalAllOperations(operation, 31, 99)
+            false -> intDecimalAllOperations(operation, maxDivisor, maxDividend, maxMultiplicand)
         }
     }
 
