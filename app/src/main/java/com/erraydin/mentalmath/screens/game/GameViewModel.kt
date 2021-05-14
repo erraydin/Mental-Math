@@ -1,7 +1,6 @@
 package com.erraydin.mentalmath.screens.game
 
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.*
 import com.erraydin.mentalmath.database.Score
 import com.erraydin.mentalmath.database.ScoreDatabaseDao
@@ -31,7 +30,7 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
         const val BUTTON_DIVISION = "/"
         const val BUTTON_MINUS = "-"
         const val ONE_SECOND = 1000L
-        const val TOTAL_TIME = 12000L
+        const val TOTAL_TIME = 120000L
     }
 
 
@@ -39,7 +38,7 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     * ################ BoilerPlate Code For Coroutines ###############
     * ###############################################################*/
 
-    //This is for cancelling coroutines when the viewmodel is destroyed
+    //This is for cancelling coroutines when the viewModel is destroyed
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -47,7 +46,6 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     /* ###############################################################
     * ############ End of BoilerPlate Code For Coroutines #############
     * ###############################################################*/
-
 
 
     private val _remainingTime = MutableLiveData<Long>()
@@ -92,7 +90,6 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
 
     init {
         nextQuestion()
-        Log.i("GameViewMode", "GameViewModel created!")
         _score.value = 0
         _userAnswer.value = ""
         _remainingTime.value = TOTAL_TIME / ONE_SECOND
@@ -151,7 +148,12 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
 
 
     // Operands are integers, all operations
-    private fun intAllOperations(operation: String, maxDivisor: Int, maxDividend: Int, maxMultiplicand: Int) {
+    private fun intAllOperations(
+        operation: String,
+        maxDivisor: Int,
+        maxDividend: Int,
+        maxMultiplicand: Int
+    ) {
         when (operation) {
             "/" -> {
                 val (operand1, operand2, ans) = generateIntOperandsDivision(maxDivisor, maxDividend)
@@ -168,7 +170,12 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     }
 
     // Operands are integers or decimals, all operations
-    private fun intDecimalAllOperations(operation: String, maxDivisor: Int, maxDividend: Int, maxMultiplicand: Int) {
+    private fun intDecimalAllOperations(
+        operation: String,
+        maxDivisor: Int,
+        maxDividend: Int,
+        maxMultiplicand: Int
+    ) {
         when (operation) {
             // Only integers in the case of division
             "/" -> {
@@ -182,7 +189,10 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
                     // Operands are decimals
                     true -> {
                         val decimalShift = listOf(10, 100).random()
-                        val (operand1, operand2, ans) = generateIntOperandsNonDivision(operation, maxMultiplicand)
+                        val (operand1, operand2, ans) = generateIntOperandsNonDivision(
+                            operation,
+                            maxMultiplicand
+                        )
 
                         result = when (operation) {
                             "×" -> shiftDecimals(ans, decimalShift * decimalShift).toString()
@@ -190,7 +200,7 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
                         }
 
                         // if the answer is 12.0, and user inputs 12, it should be correct
-                        if (result.takeLast(2) == ".0"){
+                        if (result.takeLast(2) == ".0") {
                             result = result.dropLast(2)
                         }
 
@@ -207,9 +217,14 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
         }
     }
 
-    private fun allOperandsOperations(operation: String, maxDivisor: Int, maxDividend: Int, maxMultiplicand: Int, maxFracTerm: Int) {
+    private fun allOperandsOperations(
+        operation: String,
+        maxDivisor: Int,
+        maxDividend: Int,
+        maxMultiplicand: Int,
+        maxFracTerm: Int
+    ) {
         val isFraction = listOf(false, false, true).random()
-        Log.i("isFraction:", "$isFraction")
         when (isFraction) {
             true -> {
                 val numerator1 = Random.nextInt(0, maxFracTerm)
@@ -302,7 +317,6 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     /*---------------------------------------><-------------------------------------*/
 
 
-
     /* ############################################################################
     * #####################    Async Database operations      ######################
     * ############################################################################*/
@@ -323,7 +337,6 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     /*---------------------------------------><-------------------------------------*/
 
 
-
     /* ############################################################################
     * #####################    TIMER METHODS      #################################
     * ############################################################################*/
@@ -338,7 +351,6 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
                 }
 
                 override fun onFinish() {
-                    Log.i("GameViewModel", "added score to history")
                     addScoreToHistory()
                     _gameFinished.value = true
                 }
@@ -362,7 +374,6 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     // Prevent memory leak
     override fun onCleared() {
         super.onCleared()
-        Log.i("GameViewModel", "GameViewModel destroyed!")
         viewModelJob.cancel()
         timer?.cancel()
         timer = null

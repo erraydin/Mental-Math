@@ -72,6 +72,10 @@
             tools:listitem="@layout/spinner_item" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:fadeScrollbars="false"
+            android:scrollbarThumbVertical="@color/selected_color"
+            android:scrollbars="vertical"
+            android:background="@color/background_dark"
             app:layout_constraintTop_toBottomOf="@id/text_view_order_by"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

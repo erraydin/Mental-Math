@@ -2,7 +2,6 @@ package com.erraydin.mentalmath.screens.title
 
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +39,6 @@ class TitleFragment : Fragment() {
         )
 
 
-        Log.i("Title Fragment", "the date is $b")
         return binding.root
     }
 
