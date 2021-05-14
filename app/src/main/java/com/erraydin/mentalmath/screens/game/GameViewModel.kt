@@ -3,8 +3,10 @@ package com.erraydin.mentalmath.screens.game
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
+import com.erraydin.mentalmath.database.Score
 import com.erraydin.mentalmath.database.ScoreDatabaseDao
 import com.erraydin.mentalmath.utils.Rational
+import kotlinx.coroutines.*
 import java.lang.IllegalArgumentException
 import kotlin.random.Random
 
@@ -31,6 +33,22 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
         const val ONE_SECOND = 1000L
         const val TOTAL_TIME = 12000L
     }
+
+
+    /* ###############################################################
+    * ################ BoilerPlate Code For Coroutines ###############
+    * ###############################################################*/
+
+    //This is for cancelling coroutines when the viewmodel is destroyed
+    private var viewModelJob = Job()
+
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    /* ###############################################################
+    * ############ End of BoilerPlate Code For Coroutines #############
+    * ###############################################################*/
+
+
 
     private val _remainingTime = MutableLiveData<Long>()
     private val remainingTime: LiveData<Long>
@@ -280,6 +298,23 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     fun getResult(): String {
         return result
     }
+    /* ############################################################################
+    * #####################    Async Database operations      ######################
+    * ############################################################################*/
+    private fun addScoreToHistory() {
+        val scoreData = _score.value?.let { Score(difficulty = difficulty, score = it) }
+        uiScope.launch {
+            if (scoreData != null) {
+                insertToDatabase(scoreData)
+            }
+        }
+    }
+
+    private suspend fun insertToDatabase(scoreData: Score) {
+        return withContext(Dispatchers.IO) {
+            database.insert(scoreData)
+        }
+    }
 
 
     /* ############################################################################
@@ -296,6 +331,8 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
                 }
 
                 override fun onFinish() {
+                    Log.i("GameViewModel", "added score to history")
+                    addScoreToHistory()
                     _gameFinished.value = true
                 }
             }
@@ -304,6 +341,9 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
         }
 
     }
+
+
+
 
     //The following actually completely destroys and recreates timer, since there is no pause-resume mechanism
     fun pauseTimer() {
@@ -319,6 +359,7 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     override fun onCleared() {
         super.onCleared()
         Log.i("GameViewModel", "GameViewModel destroyed!")
+        viewModelJob.cancel()
         timer?.cancel()
         timer = null
     }

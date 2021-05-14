@@ -23,7 +23,7 @@ class HistoryFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
         val application = requireNotNull(this.activity).application
         val dataSource = ScoreDatabase.getInstance(application).scoreDatabaseDao
-        val viewModelFactory = HistoryViewModelFactory(dataSource)
+        val viewModelFactory = HistoryViewModelFactory(dataSource, application)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
 
         binding.historyViewModel = viewModel

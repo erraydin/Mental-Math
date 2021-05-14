@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="historyViewModel"
@@ -8,13 +9,18 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:background="@color/background_dark">
 
         <TextView
+            android:text="@{historyViewModel.scoresString}"
+            android:gravity="center"
+            tools:text="24 26 31"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="History Fragment" />
+            android:id="@+id/text_view_scores" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

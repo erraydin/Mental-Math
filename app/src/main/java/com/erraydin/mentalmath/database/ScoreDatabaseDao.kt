@@ -12,7 +12,7 @@ interface ScoreDatabaseDao {
     fun insert(score: Score)
 
     @Query("SELECT * from score_history_table WHERE difficulty = :difficulty ORDER BY score, scoreId DESC")
-    fun getALLOrderedByDifficulty(difficulty: String) : LiveData<List<Score>>
+    fun getALLOrderedByScore(difficulty: String) : LiveData<List<Score>>
 
     @Query("SELECT * from score_history_table WHERE difficulty = :difficulty ORDER BY scoreId, score DESC")
     fun getALLOrderedByTime(difficulty: String) : LiveData<List<Score>>

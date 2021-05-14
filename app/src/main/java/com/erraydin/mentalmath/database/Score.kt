@@ -16,5 +16,5 @@ data class Score(
     var dateMilli: Long = System.currentTimeMillis(),
 
     @ColumnInfo(name = "score")
-    var score: Int = 0
+    var score: Int
 )
