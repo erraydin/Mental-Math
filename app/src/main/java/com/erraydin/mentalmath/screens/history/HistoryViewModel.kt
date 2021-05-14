@@ -83,6 +83,19 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
         }
     }
 
+    fun clearScores() {
+        uiScope.launch {
+            clearScoresFromDataBase()
+            _scores.value = getScoresFromDatabase()
+        }
+    }
+
+    private suspend fun clearScoresFromDataBase() {
+        return withContext(Dispatchers.IO) {
+            database.clear(_difficulty.value!!)
+        }
+    }
+
     private suspend fun getScoresFromDatabase(): List<Score>? {
         return withContext(Dispatchers.IO) {
             when(_orderBy.value) {

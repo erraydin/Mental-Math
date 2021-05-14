@@ -21,12 +21,14 @@ class ScoreAdapter : RecyclerView.Adapter<ScoreAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.textViewDate.text = DateUtils.formatDateTime(
+        var date = DateUtils.formatDateTime(
             holder.textViewDate.context,
             item.dateMilli,
             DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or
                     DateUtils.FORMAT_SHOW_YEAR
         )
+        date = "$position-)  $date"
+        holder.textViewDate.text = date
         val scoreText = "Score: ${item.score}"
         holder.textViewScore.text = scoreText
     }
