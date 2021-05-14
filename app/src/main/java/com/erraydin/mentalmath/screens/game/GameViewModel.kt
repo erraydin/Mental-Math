@@ -3,11 +3,12 @@ package com.erraydin.mentalmath.screens.game
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
+import com.erraydin.mentalmath.database.ScoreDatabaseDao
 import com.erraydin.mentalmath.utils.Rational
 import java.lang.IllegalArgumentException
 import kotlin.random.Random
 
-class GameViewModel(difficulty: String) : ViewModel() {
+class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : ViewModel() {
 
     companion object {
         const val EASY = "Easy"
@@ -38,7 +39,6 @@ class GameViewModel(difficulty: String) : ViewModel() {
     val remainingTimeString = Transformations.map(remainingTime) { time ->
         time.toString()
     }
-    val difficulty = difficulty
     private val _gameFinished = MutableLiveData<Boolean>()
     val gameFinished: LiveData<Boolean>
         get() = _gameFinished

@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.erraydin.mentalmath.R
+import com.erraydin.mentalmath.database.ScoreDatabase
 import com.erraydin.mentalmath.databinding.FragmentGameBinding
 
 
@@ -31,7 +32,10 @@ class GameFragment : Fragment() {
 
 
         val args = arguments?.let { GameFragmentArgs.fromBundle(it) }
-        viewModelFactory = GameViewModelFactory(args?.difficulty ?: "Medium")
+        val application = requireNotNull(this.activity).application
+        val dataSource = ScoreDatabase.getInstance(application).scoreDatabaseDao
+
+        viewModelFactory = GameViewModelFactory(args?.difficulty ?: "Medium", dataSource)
         viewModel = ViewModelProvider(this, viewModelFactory).get(GameViewModel::class.java)
 
         binding.gameViewModel = viewModel
