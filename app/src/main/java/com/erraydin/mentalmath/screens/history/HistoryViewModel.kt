@@ -42,8 +42,11 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
 //        get() = _orderBy
 
 
-    private val scores = MutableLiveData<List<Score>>()
-    val scoresString = Transformations.map(scores) { scores ->
+    private val _scores = MutableLiveData<List<Score>>()
+    val scores : LiveData<List<Score>>
+        get() = _scores
+
+    val scoresString = Transformations.map(_scores) { scores ->
         formatScores(scores)
     }
 
@@ -76,7 +79,7 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
 
     fun makeQuery() {
         uiScope.launch {
-            scores.value = getScoresFromDatabase()
+            _scores.value = getScoresFromDatabase()
         }
     }
 

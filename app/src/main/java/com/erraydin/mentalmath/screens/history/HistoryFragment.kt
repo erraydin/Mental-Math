@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.erraydin.mentalmath.R
 import com.erraydin.mentalmath.database.ScoreDatabase
@@ -29,6 +30,17 @@ class HistoryFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(HistoryViewModel::class.java)
 
         binding.historyViewModel = viewModel
+
+
+        val adapter = ScoreAdapter()
+        binding.recyclerViewScores.adapter = adapter
+
+        viewModel.scores.observe(viewLifecycleOwner, Observer { newScores ->
+            newScores?.let {
+                adapter.data = newScores
+            }
+        })
+
         binding.lifecycleOwner = this
 
         setupSpinners()
