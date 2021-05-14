@@ -5,9 +5,7 @@ import android.content.res.Resources
 import androidx.lifecycle.*
 import com.erraydin.mentalmath.database.Score
 import com.erraydin.mentalmath.database.ScoreDatabaseDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import java.lang.StringBuilder
 
 class HistoryViewModel(val database: ScoreDatabaseDao, application: Application) :
@@ -26,7 +24,7 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
     * ################ BoilerPlate Code For Coroutines ###############
     * ###############################################################*/
 
-    //This is for cancelling coroutines when the viewmodel is destroyed
+    //This is for cancelling coroutines when the viewModel is destroyed
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -34,6 +32,8 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
     /* ###############################################################
     * ############ End of BoilerPlate Code For Coroutines #############
     * ###############################################################*/
+
+
     private val _difficulty = MutableLiveData<String>()
     val difficulty: LiveData<String>
         get() = _difficulty
@@ -42,10 +42,16 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
     val orderBy: LiveData<String>
         get() = _orderBy
 
-    private val scores: LiveData<List<Score>> = database.getALLOrderedByScore(MEDIUM)
+
+    private val scores = MutableLiveData<List<Score>>()
     val scoresString = Transformations.map(scores) { scores ->
         formatScores(scores)
     }
+
+    init {
+        setDifficulty(MEDIUM)
+    }
+
 
     private fun formatScores(scores: List<Score>): String {
         val stringBuilder = StringBuilder()
@@ -55,6 +61,26 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
         return stringBuilder.toString()
     }
 
+    /* ###############################################################
+    * ################ Async database queries   #######################
+    * ###############################################################*/
+
+    fun setDifficulty(difficulty: String) {
+        _difficulty.value = difficulty
+        uiScope.launch {
+            scores.value = getScoresFromDatabase(difficulty)
+        }
+    }
+
+    private suspend fun getScoresFromDatabase(difficulty: String): List<Score>? {
+        return withContext(Dispatchers.IO) {
+            database.getALLOrderedByScore(_difficulty.value!!)
+        }
+    }
+
+    /* ###############################################################
+    * ################ End of Async database queries  ###############
+    * ###############################################################*/
 
     override fun onCleared() {
         super.onCleared()
