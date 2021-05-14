@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/titleFragment"
         android:name="com.erraydin.mentalmath.screens.title.TitleFragment"
-        android:label="TitleFragment" >
+        android:label="Mental Math" >
         <action
             android:id="@+id/action_titleFragment_to_historyFragment"
             app:destination="@id/historyFragment"
@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/chooseDifficultyFragment"
         android:name="com.erraydin.mentalmath.screens.choose_difficulty.ChooseDifficultyFragment"
-        android:label="ChooseDifficultyFragment" >
+        android:label="Mental Math" >
         <action
             android:id="@+id/action_chooseDifficultyFragment_to_gameFragment"
             app:destination="@id/gameFragment"
@@ -33,11 +33,11 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.erraydin.mentalmath.screens.history.HistoryFragment"
-        android:label="HistoryFragment" />
+        android:label="Score History" />
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.erraydin.mentalmath.screens.game.GameFragment"
-        android:label="GameFragment" >
+        android:label="Mental Math" >
         <action
             android:id="@+id/action_gameFragment_to_scoreFragment"
             app:destination="@id/scoreFragment"
@@ -49,7 +49,7 @@
     <fragment
         android:id="@+id/scoreFragment"
         android:name="com.erraydin.mentalmath.screens.score.ScoreFragment"
-        android:label="ScoreFragment" >
+        android:label="Mental Math" >
         <action
             android:id="@+id/action_scoreFragment_to_chooseDifficultyFragment"
             app:destination="@id/chooseDifficultyFragment"
@@ -66,5 +66,5 @@
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.erraydin.mentalmath.screens.info.InfoFragment"
-        android:label="InfoFragment" />
+        android:label="Info" />
 </navigation>

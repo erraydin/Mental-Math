@@ -26,17 +26,17 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/spinner_difficulty"
             app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
+            android:id="@+id/spinner_difficulty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:backgroundTint="@color/white"
             android:popupBackground="@color/selected_color"
             android:spinnerMode="dropdown"
-            android:id="@+id/spinner_difficulty"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
             app:layout_constraintEnd_toStartOf="@id/text_view_order_by"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintStart_toEndOf="@id/text_view_choose_difficulty"
@@ -44,70 +44,70 @@
             tools:listitem="@layout/spinner_item" />
 
         <TextView
-            android:popupBackground="@color/selected_color"
             android:id="@+id/text_view_order_by"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="24dp"
             android:gravity="center"
+            android:popupBackground="@color/selected_color"
             android:text="Order by: "
             android:textColor="@color/white"
             android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/spinner_order_by"
             app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/spinner_difficulty"
-            app:layout_constraintEnd_toStartOf="@id/spinner_order_by"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:popupBackground="@color/selected_color"
-            android:spinnerMode="dropdown"
             android:id="@+id/spinner_order_by"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/white"
+            android:popupBackground="@color/selected_color"
+            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/text_view_order_by"
             app:layout_constraintHeight_percent="0.07"
+            app:layout_constraintStart_toEndOf="@id/text_view_order_by"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/spinner_item" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:fadeScrollbars="false"
-            android:scrollbarThumbVertical="@color/selected_color"
-            android:scrollbars="vertical"
-            android:background="@color/background_dark"
-            app:layout_constraintTop_toBottomOf="@id/text_view_order_by"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_clear"
             android:id="@+id/recycler_view_scores"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            android:background="@color/background_dark"
+            android:fadeScrollbars="false"
+            android:scrollbarThumbVertical="@color/selected_color"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/button_clear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_order_by">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_marginBottom="12dp"
             android:id="@+id/button_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="12dp"
+            android:onClick="@{() -> historyViewModel.clearScores()}"
             android:text="Clear"
             android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> historyViewModel.clearScores()}"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/text_view_scores"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
-<!--            android:text="@{historyViewModel.scoresString}"-->
-<!--            android:textColor="@color/white"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/text_view_choose_difficulty"-->
-<!--            tools:text="24 26 31" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/text_view_scores"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="@{historyViewModel.scoresString}"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/text_view_choose_difficulty"-->
+        <!--            tools:text="24 26 31" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

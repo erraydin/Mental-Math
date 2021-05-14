@@ -32,11 +32,6 @@ class TitleFragment : Fragment() {
         binding.buttonInfo.setOnClickListener {
             findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToInfoFragment())
         }
-        val a = System.currentTimeMillis()
-        val b = DateUtils.formatDateTime(context, a,
-            DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or
-                    DateUtils.FORMAT_SHOW_YEAR
-        )
 
 
         return binding.root
