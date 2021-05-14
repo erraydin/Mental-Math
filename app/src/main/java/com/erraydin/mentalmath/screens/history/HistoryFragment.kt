@@ -32,12 +32,13 @@ class HistoryFragment : Fragment() {
         binding.historyViewModel = viewModel
         binding.lifecycleOwner = this
 
-        setupSpinner()
+        setupSpinners()
 
         return binding.root
     }
 
-    private fun setupSpinner() {
+
+    private fun setupSpinners() {
         val difficulties = arrayOf("Easy", "Medium", "Hard", "Expert")
         val difficultyAdapter =
             activity?.let { ArrayAdapter(it, R.layout.spinner_item, difficulties) }
@@ -52,6 +53,27 @@ class HistoryFragment : Fragment() {
                     id: Long
                 ) {
                     viewModel.setDifficulty(difficulties[position])
+                    viewModel.makeQuery()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
+
+        val orderBy = arrayOf("Score", "Date")
+        val orderAdapter = activity?.let { ArrayAdapter(it, R.layout.spinner_item, orderBy) }
+        binding.spinnerOrderBy.adapter = orderAdapter
+        binding.spinnerDifficulty.setSelection(0)
+        binding.spinnerOrderBy.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    viewModel.setOrderBy(orderBy[position])
+                    viewModel.makeQuery()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

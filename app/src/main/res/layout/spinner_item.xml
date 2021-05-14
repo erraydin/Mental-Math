@@ -6,4 +6,4 @@
     android:layout_height="wrap_content"
     android:textColor="@color/white"
     android:padding="8dp"
-    tools:text="Medium" />
+    tools:text="Med" />

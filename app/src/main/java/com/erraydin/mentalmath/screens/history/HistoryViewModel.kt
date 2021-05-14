@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.erraydin.mentalmath.database.Score
 import com.erraydin.mentalmath.database.ScoreDatabaseDao
 import kotlinx.coroutines.*
+import java.lang.IllegalArgumentException
 import java.lang.StringBuilder
 
 class HistoryViewModel(val database: ScoreDatabaseDao, application: Application) :
@@ -16,8 +17,8 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
         const val MEDIUM = "Medium"
         const val HARD = "Hard"
         const val EXPERT = "Expert"
-        const val BY_SCORE = "By Score"
-        const val BY_DATE = "By Date"
+        const val SCORE = "Score"
+        const val DATE = "Date"
     }
 
     /* ###############################################################
@@ -50,6 +51,8 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
 
     init {
         setDifficulty(MEDIUM)
+        setOrderBy(SCORE)
+        makeQuery()
     }
 
 
@@ -67,16 +70,28 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
 
     fun setDifficulty(difficulty: String) {
         _difficulty.value = difficulty
+    }
+
+    fun setOrderBy(orderBy: String) {
+        _orderBy.value = orderBy
+    }
+
+    fun makeQuery() {
         uiScope.launch {
-            scores.value = getScoresFromDatabase(difficulty)
+            scores.value = getScoresFromDatabase()
         }
     }
 
-    private suspend fun getScoresFromDatabase(difficulty: String): List<Score>? {
+    private suspend fun getScoresFromDatabase(): List<Score>? {
         return withContext(Dispatchers.IO) {
-            database.getALLOrderedByScore(_difficulty.value!!)
+            when(_orderBy.value) {
+                "Score" -> {database.getALLOrderedByScore(_difficulty.value!!)}
+                "Date" -> {database.getALLOrderedByTime(_difficulty.value!!)}
+                else -> throw IllegalArgumentException("orderBy value is illegal!")
+            }
         }
     }
+
 
     /* ###############################################################
     * ################ End of Async database queries  ###############
