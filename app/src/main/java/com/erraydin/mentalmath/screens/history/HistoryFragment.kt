@@ -9,7 +9,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.erraydin.mentalmath.R
 import com.erraydin.mentalmath.database.ScoreDatabase
 import com.erraydin.mentalmath.databinding.FragmentHistoryBinding
@@ -60,10 +59,11 @@ class HistoryFragment : Fragment() {
                 }
             }
 
+
         val orderBy = arrayOf("Score", "Date")
         val orderAdapter = activity?.let { ArrayAdapter(it, R.layout.spinner_item, orderBy) }
         binding.spinnerOrderBy.adapter = orderAdapter
-        binding.spinnerDifficulty.setSelection(0)
+        binding.spinnerOrderBy.setSelection(0)
         binding.spinnerOrderBy.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(

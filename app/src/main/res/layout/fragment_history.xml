@@ -23,7 +23,7 @@
             android:gravity="center"
             android:text="Difficulty: "
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/spinner_difficulty"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -31,11 +31,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/spinner_difficulty"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             android:backgroundTint="@color/white"
             android:popupBackground="@color/selected_color"
+            android:spinnerMode="dropdown"
+            android:id="@+id/spinner_difficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toStartOf="@id/text_view_order_by"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintStart_toEndOf="@id/text_view_choose_difficulty"
@@ -43,6 +44,7 @@
             tools:listitem="@layout/spinner_item" />
 
         <TextView
+            android:popupBackground="@color/selected_color"
             android:id="@+id/text_view_order_by"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -50,18 +52,19 @@
             android:gravity="center"
             android:text="Order by: "
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/spinner_difficulty"
             app:layout_constraintEnd_toStartOf="@id/spinner_order_by"/>
 
         <Spinner
+            android:popupBackground="@color/selected_color"
+            android:spinnerMode="dropdown"
             android:id="@+id/spinner_order_by"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:backgroundTint="@color/white"
-            android:popupBackground="@color/selected_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_view_order_by"
             app:layout_constraintHeight_percent="0.07"

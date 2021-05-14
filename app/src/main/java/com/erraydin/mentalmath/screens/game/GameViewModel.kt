@@ -298,6 +298,11 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
     fun getResult(): String {
         return result
     }
+
+    /*---------------------------------------><-------------------------------------*/
+
+
+
     /* ############################################################################
     * #####################    Async Database operations      ######################
     * ############################################################################*/
@@ -315,6 +320,8 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
             database.insert(scoreData)
         }
     }
+    /*---------------------------------------><-------------------------------------*/
+
 
 
     /* ############################################################################
@@ -341,9 +348,6 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
         }
 
     }
-
-
-
 
     //The following actually completely destroys and recreates timer, since there is no pause-resume mechanism
     fun pauseTimer() {

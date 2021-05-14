@@ -30,18 +30,16 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    /* ###############################################################
-    * ############ End of BoilerPlate Code For Coroutines #############
-    * ###############################################################*/
+    /*---------------------------------------><-------------------------------------*/
 
 
     private val _difficulty = MutableLiveData<String>()
-    val difficulty: LiveData<String>
-        get() = _difficulty
+//    val difficulty: LiveData<String>
+//        get() = _difficulty
 
     private val _orderBy = MutableLiveData<String>()
-    val orderBy: LiveData<String>
-        get() = _orderBy
+//    val orderBy: LiveData<String>
+//        get() = _orderBy
 
 
     private val scores = MutableLiveData<List<Score>>()
@@ -92,10 +90,7 @@ class HistoryViewModel(val database: ScoreDatabaseDao, application: Application)
         }
     }
 
-
-    /* ###############################################################
-    * ################ End of Async database queries  ###############
-    * ###############################################################*/
+   /*---------------------------------------><-------------------------------------*/
 
     override fun onCleared() {
         super.onCleared()
