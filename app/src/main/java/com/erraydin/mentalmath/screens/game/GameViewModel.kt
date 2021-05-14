@@ -30,7 +30,7 @@ class GameViewModel(val difficulty: String, val database: ScoreDatabaseDao) : Vi
         const val BUTTON_DIVISION = "/"
         const val BUTTON_MINUS = "-"
         const val ONE_SECOND = 1000L
-        const val TOTAL_TIME = 12000L
+        const val TOTAL_TIME = 120000L
     }
 
 
