@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.erraydin.mentalmath.R
 import com.erraydin.mentalmath.databinding.FragmentScoreBinding
 
@@ -23,9 +24,18 @@ class ScoreFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_score, container, false)
         val args = arguments?.let { ScoreFragmentArgs.fromBundle(it) }
 
+        binding.buttonPlayAgain.setOnClickListener {
+            findNavController().navigate(ScoreFragmentDirections.actionScoreFragmentToChooseDifficultyFragment())
+        }
+
+        binding.buttonMainMenu.setOnClickListener {
+            findNavController().navigate(ScoreFragmentDirections.actionScoreFragmentToTitleFragment())
+        }
+
         viewModelFactory = ScoreViewModelFactory(args?.score.toString())
         viewModel = ViewModelProvider(this, viewModelFactory).get(ScoreViewModel::class.java)
         binding.textViewScore.text = viewModel.score
+
 
         return binding.root
     }
