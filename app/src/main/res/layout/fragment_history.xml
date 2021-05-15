@@ -14,6 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_dark">
+        <View
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/outline_color"/>
 
         <TextView
             android:id="@+id/text_view_choose_difficulty"
@@ -35,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/white"
-            android:popupBackground="@color/selected_color"
+            android:popupBackground="@color/background_lighter"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toStartOf="@id/text_view_order_by"
             app:layout_constraintHeight_percent="0.07"
@@ -63,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:backgroundTint="@color/white"
-            android:popupBackground="@color/selected_color"
+            android:popupBackground="@color/background_lighter"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.07"
@@ -88,6 +93,8 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.button.MaterialButton
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
             android:id="@+id/button_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

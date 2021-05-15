@@ -8,13 +8,22 @@
         android:layout_height="match_parent"
         android:background="@color/background_dark">
 
+        <View
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/outline_color"/>
+
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
             android:id="@+id/button_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:backgroundTint="@color/background_lighter"
+            android:backgroundTint="@color/background_dark"
             android:text="Info"
             app:cornerRadius="24dp"
             app:layout_constraintBottom_toTopOf="@id/button_play"
@@ -25,6 +34,10 @@
             app:layout_constraintVertical_chainStyle="packed" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            android:backgroundTint="@color/background_dark"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
             android:id="@+id/button_play"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -39,6 +52,10 @@
             app:layout_constraintTop_toBottomOf="@id/button_info" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:id="@+id/button_history"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -51,7 +68,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_play" />
-        =
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

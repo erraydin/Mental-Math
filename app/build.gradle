@@ -13,8 +13,9 @@ android {
         applicationId "com.erraydin.mentalmath"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
+        versionCode 4
         versionName "1.0"
+        resConfigs "en"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

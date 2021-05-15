@@ -8,7 +8,11 @@
         android:layout_height="match_parent"
         android:background="@color/background_dark">
 
-        <!-- TODO: Update blank fragment layout -->
+        <View
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/outline_color"/>
         <TextView
             android:id="@+id/text_view_great_job"
             android:layout_width="match_parent"
@@ -45,6 +49,9 @@
             tools:text="24" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
             android:padding="24dp"
             android:layout_marginTop="24dp"
             android:id="@+id/button_play_again"
@@ -60,6 +67,9 @@
             app:layout_constraintWidth_percent="0.85" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
             android:layout_marginTop="4dp"
             android:padding="24dp"
             android:id="@+id/button_main_menu"

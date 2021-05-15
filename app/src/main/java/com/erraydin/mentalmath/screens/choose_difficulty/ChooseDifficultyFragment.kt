@@ -18,7 +18,7 @@ import kotlin.properties.Delegates
 
 class ChooseDifficultyFragment : Fragment() {
     private var darkColor: Int = 0
-    private var selectedColor: Int = 0
+    private var lighterColor: Int = 0
     private var difficulty: String = "Medium"
     private lateinit var binding: FragmentChooseDifficultyBinding
     override fun onCreateView(
@@ -32,8 +32,8 @@ class ChooseDifficultyFragment : Fragment() {
 //            findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToHistoryFragment())
 //        }
 
-        darkColor = context?.let { it1 -> ContextCompat.getColor(it1, R.color.background_lighter) }!!
-        selectedColor = context?.let { it1 -> ContextCompat.getColor(it1, R.color.selected_color) }!!
+        lighterColor = context?.let { it1 -> ContextCompat.getColor(it1, R.color.background_lighter) }!!
+        darkColor = context?.let { it1 -> ContextCompat.getColor(it1, R.color.background_dark) }!!
 
         binding.buttonStartGame.setOnClickListener {
             findNavController().navigate(ChooseDifficultyFragmentDirections.actionChooseDifficultyFragmentToGameFragment(difficulty))
@@ -59,11 +59,12 @@ class ChooseDifficultyFragment : Fragment() {
         if (difficulty != newDifficulty) {
             var button = getButton()
             button.setBackgroundColor(darkColor)
+            button.setStrokeColorResource(R.color.outline_color)
 
             difficulty = newDifficulty
             button = getButton()
-            button.setBackgroundColor(selectedColor)
-
+            button.setBackgroundColor(lighterColor)
+            button.setStrokeColorResource(R.color.background_dark)
             binding.textViewDifficultyTitle.text = "$newDifficulty Difficulty"
             binding.textViewOperations.text = getInfoText()
         }

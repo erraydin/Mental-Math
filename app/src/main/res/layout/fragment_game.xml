@@ -13,7 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_dark">
-
+        <View
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:background="@color/outline_color"/>
 
         <TextView
             android:id="@+id/text_view_remaining_time_title"
@@ -100,6 +104,10 @@
             app:layout_constraintVertical_bias="0.05" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_1)}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_1"
@@ -117,6 +125,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_2)}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_2"
@@ -134,6 +146,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_3)}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_3"
@@ -151,6 +167,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.backspace()}"
             android:layout_marginTop="12dp"
             android:id="@+id/button_backspace"
@@ -168,6 +188,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_4)}"
             android:id="@+id/button_4"
             android:layout_width="0dp"
@@ -184,6 +208,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_5)}"
             android:id="@+id/button_5"
             android:layout_width="0dp"
@@ -200,6 +228,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_6)}"
             android:id="@+id/button_6"
             android:layout_width="0dp"
@@ -216,6 +248,11 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_MINUS)}"
             app:layout_constraintBottom_toTopOf="@id/button_division"
             android:id="@+id/button_minus"
@@ -232,6 +269,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_7)}"
             app:layout_constraintBottom_toTopOf="@id/view_before_0"
             android:id="@+id/button_7"
@@ -248,6 +289,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_8)}"
             app:layout_constraintBottom_toTopOf="@id/button_0"
             android:id="@+id/button_8"
@@ -264,6 +309,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_9)}"
             app:layout_constraintBottom_toTopOf="@id/button_dot"
             android:id="@+id/button_9"
@@ -280,6 +329,10 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_DIVISION)}"
             app:layout_constraintBottom_toTopOf="@id/button_skip"
             android:id="@+id/button_division"
@@ -309,6 +362,10 @@
             />
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_0)}"
             android:id="@+id/button_0"
             android:layout_width="0dp"
@@ -325,6 +382,10 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.addToAnswer(gameViewModel.BUTTON_DOT)}"
             android:id="@+id/button_dot"
             android:layout_width="0dp"
@@ -341,6 +402,10 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <com.google.android.material.button.MaterialButton
+            android:textColor="@color/white"
+            app:strokeColor="@color/outline_color"
+            app:strokeWidth="0.7dp"
+            android:backgroundTint="@color/background_dark"
             android:onClick="@{() -> gameViewModel.skipQuestion()}"
             app:cornerRadius="12dp"
             android:text="Skip"
